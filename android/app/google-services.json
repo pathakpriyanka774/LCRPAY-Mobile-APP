@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "133165741694",
+    "project_id": "lcrpay-c18c3",
+    "storage_bucket": "lcrpay-c18c3.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:133165741694:android:8d81cc87c160b4e5ba8a2f",
+        "android_client_info": {
+          "package_name": "com.LcrPay.LcrPay"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCxaNlyrEi6fH4VTQYnO0fo5rc7sGmRSLQ"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

@@ -1,0 +1,56 @@
+{
+  "expo": {
+    "name": "LCR Pay",
+    "scheme": "lcr-pay",
+    "owner": "deepak903",
+    "version": "1.0.19",
+    "orientation": "portrait",
+    "icon": "./assets/lccr.png",
+    "userInterfaceStyle": "light",
+    "newArchEnabled": true,
+    "platforms": ["android"],
+    "runtimeVersion": "1.0.0",
+    // "updates": {
+    //   "enabled": true,
+    //   "url": "https://u.expo.dev/8c32f015-1ef3-4347-b430-8f4437b76ada",
+    //   "checkAutomatically": "ON_LOAD",
+    //   "fallbackToCacheTimeout": 0,
+    //   "channel": "production"
+    // },
+    "splash": {
+      "image": "./assets/lccr.png",
+      "resizeMode": "contain",
+      "backgroundColor": "#ffffff"
+    },
+    "ios": {
+      "supportsTablet": true,
+      "infoPlist": {
+        "NSCameraUsageDescription": "This app requires access to the camera for scanning QR codes.",
+        "NSContactsUsageDescription": "This app requires access to your contacts to provide an easy recharge experience."
+      }
+    },
+    "android": {
+      "adaptiveIcon": {
+        "foregroundImage": "./assets/lccr.png",
+        "backgroundColor": "#ffffff"
+      },
+      "permissions": [
+        "CAMERA",
+        "READ_CONTACTS"
+      ],
+      "package": "com.LcrPay.LcrPay"
+    },
+    "web": {
+      "favicon": "./assets/lccr.png"
+    },
+    "plugins": [
+      "expo-secure-store",
+      "expo-build-properties"
+    ],
+    "extra": {
+      "eas": {
+        "projectId": "8c32f015-1ef3-4347-b430-8f4437b76ada"
+      }
+    }
+  }
+}

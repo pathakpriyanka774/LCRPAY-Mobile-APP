@@ -1,0 +1,58 @@
+// Top-level build file where you can add configuration options common to all sub-projects/modules.
+
+buildscript {
+
+  ext {
+        buildToolsVersion = findProperty('android.buildToolsVersion') ?: '36.0.0'
+        minSdkVersion = Integer.parseInt(findProperty('android.minSdkVersion') ?: '24')
+        compileSdkVersion = Integer.parseInt(findProperty('android.compileSdkVersion') ?: '36')
+        targetSdkVersion = Integer.parseInt(findProperty('android.targetSdkVersion') ?: '36')
+        kotlinVersion = (findProperty('kotlinVersion') ?: findProperty('android.kotlinVersion') ?: '2.1.20')
+
+        ndkVersion = "27.1.12297006"
+        
+    }
+
+    println "[ExpoRootProject] Using the following versions:"
+    println "  - buildTools:  ${ext.buildToolsVersion}"
+    println "  - minSdk:      ${ext.minSdkVersion}"
+    println "  - compileSdk:  ${ext.compileSdkVersion}"
+    println "  - targetSdk:   ${ext.targetSdkVersion}"
+    println "  - ndk:         ${ext.ndkVersion}"
+    println "  - kotlin:      ${ext.kotlinVersion}"
+
+
+  repositories {
+    google()
+    mavenCentral()
+  }
+  dependencies {
+    classpath('com.android.tools.build:gradle')
+    classpath('com.facebook.react:react-native-gradle-plugin')
+    classpath('org.jetbrains.kotlin:kotlin-gradle-plugin')
+
+
+    classpath("com.google.gms:google-services:4.4.2")  
+    classpath 'com.google.firebase:firebase-crashlytics-gradle:3.0.6'
+  }
+}
+
+allprojects {
+  repositories {
+    google()
+    mavenCentral()
+    maven { url 'https://www.jitpack.io' }
+    maven { url "$rootDir/../node_modules/@notifee/react-native/android/libs" }
+  }
+}
+
+tasks.withType(org.jetbrains.kotlin.gradle.tasks.KotlinCompile).all {
+    kotlinOptions {
+        freeCompilerArgs += ["-Xsuppress-deprecated"]
+    }
+}
+
+
+
+apply plugin: "expo-root-project"
+apply plugin: "com.facebook.react.rootproject"

@@ -1,0 +1,8 @@
+{
+  "updateUrl": "https://u.expo.dev/8c32f015-1ef3-4347-b430-8f4437b76ada?platform=android&runtime-version=1.0.0&channel-name=production",
+  "runtimeVersion": "1.0.0",
+  "checkOnLaunch": "ALWAYS",
+  "launchWaitMs": 0,
+  "codeSigningCertificate": "public-key.pem",
+  "codeSigningMetadata": { "keyid": "main", "alg": "rsa-v1_5-sha256" }
+}
