@@ -15,6 +15,7 @@ import axios from "axios";
 import CusomSpinner from "./miscellaneous/CustomSpinner";
 import Theme from "./Theme";
 import AsyncStorage from "@react-native-async-storage/async-storage";
+import { BASE_URL } from "../utils/config";
 
 const FAST = () => {
   const route = useRoute();
@@ -70,7 +71,7 @@ const FAST = () => {
         return;
       }
       const response = await axios.get(
-        "https://bbpslcrapi.lcrpay.com/api/v1/bbps/billers/search/fast",
+        `${BASE_URL}/api/v1/bbps/billers/search/fast`,
         {
           params: {
             category: endpoint,
@@ -175,7 +176,7 @@ const FAST = () => {
       }
 
       const response = await axios.get(
-        `https://bbpslcrapi.lcrpay.com/api/v1/bbps/billers/ui-info/${Biller.blr_id}`,
+        `${BASE_URL}/api/v1/bbps/billers/ui-info/${Biller.blr_id}`,
         {
           headers: {
             "Content-Type": "application/json",

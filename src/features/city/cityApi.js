@@ -1,7 +1,12 @@
+import { API_ENDPOINTS, DEFAULT_HEADERS } from '../../../utils/config';
+
 export function allCities() {
   return new Promise(async (resolve, reject) => {
     try {
-      const resp = await fetch("https://api.hbadigitalindia.com/cityList"); // Make sure this is your correct IP address
+      const resp = await fetch(API_ENDPOINTS.CITIES, {
+        method: 'GET',
+        headers: DEFAULT_HEADERS,
+      });
 
       if (!resp.ok) {
         return reject(new Error(`HTTP error! status: ${resp.status}`));

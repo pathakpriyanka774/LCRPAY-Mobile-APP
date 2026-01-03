@@ -13,6 +13,7 @@ import {
 import { MaterialIcons, FontAwesome5 } from "@expo/vector-icons";
 import Theme from "../Theme";
 import axios from "axios";
+import { BASE_URL } from "../../utils/config";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { useNavigation } from "@react-navigation/native";
 import { Landmark } from "lucide-react-native";
@@ -162,7 +163,7 @@ const AddBankAccount = () => {
       };
 
       const response = await axios.post(
-        "https://bbpslcrapi.lcrpay.com/payments/send_otp_phone_number",
+        `${BASE_URL}/payments/send_otp_phone_number`,
         requestData,
         { headers }
       );

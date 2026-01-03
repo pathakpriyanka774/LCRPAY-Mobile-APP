@@ -14,6 +14,7 @@ import Theme from "../components/Theme";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import axios from "axios";
 import base64 from "react-native-base64";
+import { BASE_URL } from "../utils/config";
 
 const AadharDetails = () => {
   const navigation = useNavigation();
@@ -36,7 +37,7 @@ const AadharDetails = () => {
       };
 
       const response = await axios.get(
-        `https://bbpslcrapi.lcrpay.com/userAadharDetail/`,
+        `${BASE_URL}/userAadharDetail/`,
         // {},  // Empty body, since it's a POST request
         { headers } // Pass headers correctly inside an object
       );

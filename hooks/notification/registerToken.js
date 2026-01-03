@@ -8,6 +8,7 @@ import {
   onTokenRefresh,
 } from '@react-native-firebase/messaging';
 import { Platform } from 'react-native';
+import { BASE_URL } from '../../utils/config';
 
 export async function getFcmToken() {
   const m = getMessaging(getApp());
@@ -31,7 +32,7 @@ export async function registerTokenWithBackend(token) {
 
   const access_token = await AsyncStorage.getItem("access_token");
   try {
-    const res = await fetch('https://bbpslcrapi.lcrpay.com/notification/register', {
+    const res = await fetch(`${BASE_URL}/notification/register`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',

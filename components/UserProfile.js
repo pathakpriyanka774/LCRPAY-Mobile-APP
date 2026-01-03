@@ -22,6 +22,7 @@ import AsyncStorage from "@react-native-async-storage/async-storage";
 import { version } from '../package.json';
 import { CommonActions, useNavigation } from "@react-navigation/native";
 import {SafeAreaView} from 'react-native-safe-area-context';
+import { BASE_URL } from "../utils/config";
 
 
 const UserProfile = () => {
@@ -70,7 +71,7 @@ const UserProfile = () => {
 
 
   useEffect(() => {
-    console.log(`https://bbpslcrapi.lcrpay.com/${user?.user?.profile}`);
+    console.log(`${BASE_URL}/${user?.user?.profile}`);
     if (user?.user && !isInitialized) {
       setFormData({
         userName: user.user.fullname || "",
@@ -78,7 +79,7 @@ const UserProfile = () => {
 
         userImg: user?.user?.profile
           ? correctPath(
-            `https://bbpslcrapi.lcrpay.com/${user?.user?.profile}`
+            `${BASE_URL}/${user?.user?.profile}`
           )
           : "https://images.unsplash.com/photo-1633332755192-727a05c4013d?w=400&q=80",
 

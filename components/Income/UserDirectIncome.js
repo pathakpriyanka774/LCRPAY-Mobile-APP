@@ -12,6 +12,7 @@ import { useNavigation, useRoute } from "@react-navigation/native";
 import axios from "axios";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { formatDate } from "../../utils";
+import { BASE_URL } from "../../utils/config";
 
 const UserDirectIncome = () => {
   const navigation = useNavigation();
@@ -41,7 +42,7 @@ const UserDirectIncome = () => {
       };
 
       const response = await axios.post(
-        `https://bbpslcrapi.lcrpay.com/network/direct_income`,
+        `${BASE_URL}/network/direct_income`,
         {}, // Empty body, since it's a POST request
         { headers } // Pass headers correctly inside an object
       );

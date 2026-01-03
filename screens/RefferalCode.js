@@ -592,6 +592,7 @@ import Theme from "../components/Theme";
 import axios from "axios";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { useAppStore } from "../zustand/Store";
+import { BASE_URL } from "../utils/config";
 
 const ReferralCode = () => {
   const [referralCode, setReferralCode] = useState("");
@@ -632,7 +633,7 @@ const ReferralCode = () => {
       }
 
       const response = await axios.get(
-        `https://bbpslcrapi.lcrpay.com/referral/validate-referral?member_id=${referralCode.trim()}`,
+        `${BASE_URL}/referral/validate-referral?member_id=${referralCode.trim()}`,
         {
           headers: {
             Authorization: `Bearer ${token}`,
@@ -657,43 +658,44 @@ const ReferralCode = () => {
       setValidating(false);
     }
   };
+//Below code comment by --priyanka
+  // const handleReferralCode = async (sendData) => {
+  //   if (sendData === 1 && !referrer) {
+  //     setErrorMessage("Please validate the referral code first");
+  //     return;
+  //   }
 
-  const handleReferralCode = async (sendData) => {
-    if (sendData === 1 && !referrer) {
-      setErrorMessage("Please validate the referral code first");
-      return;
-    }
+  //   setLoading(true);
+  //   setErrorMessage("");
 
-    setLoading(true);
-    setErrorMessage("");
+  //   try {
+  //     const token = await AsyncStorage.getItem("access_token");
+  //     if (!token) {
+  //       throw new Error("Authentication token not found");
+  //     }
 
-    try {
-      const token = await AsyncStorage.getItem("access_token");
-      if (!token) {
-        throw new Error("Authentication token not found");
-      }
+  //     const headers = {
+  //       "Content-Type": "application/json",
+  //       Accept: "application/json",
+  //       Authorization: `Bearer ${token}`,
+  //     };
 
-      const headers = {
-        "Content-Type": "application/json",
-        Accept: "application/json",
-        Authorization: `Bearer ${token}`,
-      };
+  //     console.log(sendData===1 ? referralCode : "")
+  //     // Step 1: Register the referral relationship
+  //     const response = await axios.post(
+  //       "http://192.168.1.4:59700/register/set-referral/",
+  //       {
+  //        "refererID": sendData === 1 ? referralCode : "LCR96201633"
+  //       },
+  //       { headers }
+  //     );
 
-      console.log(sendData===1 ? referralCode:"LCR00000001")
-      // Step 1: Register the referral relationship
-      const response = await axios.post(
-        "https://bbpslcrapi.lcrpay.com/register/set-referral/",
-        {
-         "refererID":sendData===1 ? referralCode:"LCR00000001"
-        },
-        { headers }
-      );
+  //     console.log(response.data)
 
-      console.log(response.data)
-
-      if (response.data.status !== 1) {
-        throw new Error(response.data.message || "Failed to register referral");
-      }
+  //     if (response.data.status !== 1) {
+  //       throw new Error(response.data.message || "Failed to register referral");
+  //     }
+  // Above code Comented by --priyanka
 
       // Get the new user's member_id and introducer_id
       // const userId = response.data.user?.member_id;
@@ -758,32 +760,95 @@ const ReferralCode = () => {
 
       // Navigate to home with success message
 
+// below code uncommented and fixed by --priyanka
+    //   navigation.navigate("HomeScreen", {
+    //     showWelcome: true,
+    //     lcrReceived: 100,
+    //   });
+    // } catch (error) {
 
-      navigation.navigate("HomeScreen", {
-        showWelcome: true,
-        lcrReceived: 100,
-      });
-    } catch (error) {
+    //   if (axios.isAxiosError(error)) {
+    //     console.error(
+    //       "Axios Error:",
+    //       error.response?.status,
+    //       error.response?.data
+    //     );
 
-      if (axios.isAxiosError(error)) {
-        console.error(
-          "Axios Error:",
-          error.response?.status,
-          error.response?.data
-        );
-
-        if (error.response?.status === 404) {
-          Alert.alert("Error", "Requested resource not found (404)");
-        }
-      } else {
-        console.error("Unexpected Error:", error);
-        Alert.alert("Error", "Something went wrong!");
-      }
+    //     if (error.response?.status === 404) {
+    //       Alert.alert("Error", "Requested resource not found (404)");
+    //     }
+    //   } else {
+    //     console.error("Unexpected Error:", error);
+    //     Alert.alert("Error", "Something went wrong!");
+    //   }
 
       
-      console.error("Referral submission error:", error);
+    //   console.error("Referral submission error:", error);
+// above code commented by --priyanka
 
-      let errorMessage = "Something went wrong";
+
+// Fixed Skip and refferal submission flow-- Priyanka 
+      const handleReferralCode = async (sendData) => {
+
+  // ✅ SKIP FLOW — NO API CALL
+  if (sendData === 0) {
+    navigation.navigate("HomeScreen", {
+      showWelcome: true,
+      lcrReceived: 0,
+    });
+    return;
+  }
+
+  // ❌ Referral flow validation
+  if (sendData === 1 && !referrer) {
+    setErrorMessage("Please validate the referral code first");
+    return;
+  }
+
+  setLoading(true);
+  setErrorMessage("");
+
+  try {
+    const token = await AsyncStorage.getItem("access_token");
+    if (!token) {
+      throw new Error("Authentication token not found");
+    }
+
+    const headers = {
+      "Content-Type": "application/json",
+      Accept: "application/json",
+      Authorization: `Bearer ${token}`,
+    };
+
+    // ✅ ONLY called when referral is submitted
+    const response = await axios.post(
+      //  "http://192.168.1.3:59700/register/set-referral/",
+      `${BASE_URL}/register/set-referral/`,
+      {
+        refererID: referralCode,
+      },
+      { headers }
+    );
+
+    if (response.data.status !== 1) {
+      throw new Error(response.data.message || "Failed to register referral");
+    }
+
+    navigation.navigate("HomeScreen", {
+      showWelcome: true,
+      lcrReceived: 100,
+    });
+
+  } catch (error) {
+    console.error("Referral submission error:", error);
+
+    if (axios.isAxiosError(error)) {
+      Alert.alert(
+        "Error",
+        error.response?.data?.message || "Failed to apply referral"
+      );
+    } else {
+      Alert.alert("Error", "Something went wrong!");
       if (error.response) {
         // Server responded with error status
         errorMessage =
@@ -804,10 +869,15 @@ const ReferralCode = () => {
       if (!error.response || error.response.status >= 500) {
         Alert.alert("Error", errorMessage);
       }
-    } finally {
-      setLoading(false);
     }
-  };
+  } finally {
+    setLoading(false);
+  }
+};
+
+// End of fix--Priyanka
+
+
 
   return (
     <View style={styles.container}>

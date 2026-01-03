@@ -19,6 +19,7 @@ import { Entypo } from "@expo/vector-icons";
 import Theme from "../Theme";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import axios from "axios";
+import { BASE_URL } from "../../utils/config";
 
 const SECONDARY_COLOR = "#4b5563"; // Subtle gray
 
@@ -108,7 +109,7 @@ const Panverify = () => {
         Authorization: `Bearer ${token}`,
       };
       const response = await axios.post(
-        `https://bbpslcrapi.lcrpay.com/pankyc/`,
+        `${BASE_URL}/pankyc/`,
         uploadData,
         { headers }
       );

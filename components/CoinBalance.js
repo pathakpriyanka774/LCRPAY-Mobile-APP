@@ -15,6 +15,7 @@ import Theme from "../components/Theme";
 import { useSelector } from "react-redux";
 import axios from "axios";
 import AsyncStorage from "@react-native-async-storage/async-storage";
+import { BASE_URL } from "../utils/config";
 
 const { height, width } = Dimensions.get("window");
 
@@ -48,7 +49,7 @@ const CoinBalance = () => {
         Accept: "application/json",
         Authorization: `Bearer ${token}`,
       };
-      const response = await axios.get("https://bbpslcrapi.lcrpay.com/referral/total-lcr", { headers });
+      const response = await axios.get(`${BASE_URL}/referral/total-lcr`, { headers });
       if (response.data.status === 1) {
         setTotalBalance(response.data.total);
       } else {

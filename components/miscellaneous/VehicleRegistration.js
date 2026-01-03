@@ -13,6 +13,7 @@ import {
 } from "react-native";
 import { Picker } from "@react-native-picker/picker";
 import Theme from "../../components/Theme";
+import { BASE_URL } from "../../utils/config";
 import { useSelector } from "react-redux";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import axios from "axios";
@@ -155,7 +156,7 @@ const VehicleRegistration = () => {
         Authorization: `Bearer ${access_token}`,
       };
       const response = await axios.post(
-        `https://bbpslcrapi.lcrpay.com/api/v1/bbps/bill/fetch`,
+        `${BASE_URL}/api/v1/bbps/bill/fetch`,
         TransactionData,
         { headers }
       );

@@ -1,8 +1,7 @@
-import { getToken } from "../userRegister/UserRegister";
-import axios from "axios";
-import AsyncStorage from "@react-native-async-storage/async-storage";
-
-const BASE_URL = "https://bbpslcrapi.lcrpay.com";
+import { getToken } from '../userRegister/UserRegister';
+import axios from 'axios';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import { BASE_URL, DEFAULT_HEADERS } from '../../../utils/config';
 
 const apiRequest = async (method, endpoint, data, isMultipart = false) => {
   console.log("✅ Inside apiRequest...");
@@ -16,6 +15,7 @@ const apiRequest = async (method, endpoint, data, isMultipart = false) => {
     console.log("✅ Retrieved Session ID:", session_id);
 
     const headers = {
+      ...DEFAULT_HEADERS,
       Authorization: `Bearer ${access_token}`,
       session_id: session_id || "",
     };

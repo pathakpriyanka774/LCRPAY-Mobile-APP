@@ -43,13 +43,8 @@ const AllServices = () => {
         {
           iconName: "directions-car",
           text: "FASTag",
-          onPress: () =>
-            navigation.navigate("FastagTransaction", {
-              endpoint: "Fastag",
-              name: "FASTAG Recharge",
-              btnName: "Add New Vehicle",
-              reminder: "Zip through toll Plazas",
-            }),
+          disabled: true,
+          onPress: () => {},
         },
         {
           iconName: "contact-phone",
@@ -414,6 +409,7 @@ const AllServices = () => {
                   iconColor={Theme.colors.primary}
                   onPress={item.onPress}
                   cardWidth={cardWidth}
+                  disabled={item.disabled}
                 />
               ))}
             </View>
@@ -424,16 +420,18 @@ const AllServices = () => {
   );
 };
 
-const ServiceOption = ({ iconName, text, iconColor, onPress, cardWidth }) => (
+const ServiceOption = ({ iconName, text, iconColor, onPress, cardWidth, disabled }) => (
   <TouchableOpacity
-    style={[styles.optionCard, { width: cardWidth }]}
-    onPress={onPress}
-    activeOpacity={0.85}
+    style={[styles.optionCard, { width: cardWidth }, disabled && styles.disabledCard]}
+    onPress={disabled ? undefined : onPress}
+    activeOpacity={disabled ? 1 : 0.85}
+    disabled={disabled}
   >
-    <View style={styles.iconWrap}>
-      <MaterialIcons name={iconName} size={24} color={iconColor} />
+    <View style={[styles.iconWrap, disabled && styles.disabledIcon]}>
+      <MaterialIcons name={iconName} size={24} color={disabled ? "#999" : iconColor} />
     </View>
-    <Text style={styles.optionText}>{text}</Text>
+    <Text style={[styles.optionText, disabled && styles.disabledText]}>{text}</Text>
+    {disabled && <Text style={styles.comingSoonText}>Coming Soon</Text>}
   </TouchableOpacity>
 );
 
@@ -530,6 +528,23 @@ const styles = StyleSheet.create({
     fontSize: 14,
     fontWeight: "600",
     marginTop: 10,
+    textAlign: "center",
+  },
+  disabledCard: {
+    opacity: 0.6,
+    backgroundColor: "#f5f5f5",
+  },
+  disabledIcon: {
+    backgroundColor: "rgba(153, 153, 153, 0.12)",
+  },
+  disabledText: {
+    color: "#999",
+  },
+  comingSoonText: {
+    color: "#666",
+    fontSize: 10,
+    fontWeight: "500",
+    marginTop: 4,
     textAlign: "center",
   },
 });

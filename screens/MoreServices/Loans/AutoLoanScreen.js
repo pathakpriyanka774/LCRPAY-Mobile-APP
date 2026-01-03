@@ -17,6 +17,7 @@ import axios from "axios";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { useNavigation } from "@react-navigation/native";
+import { BASE_URL } from "../../../utils/config";
 
 const AutoLoanScreen = () => {
   const loanData = getLoanById("auto-loan");
@@ -151,7 +152,7 @@ const AutoLoanScreen = () => {
         Authorization: `Bearer ${token}`,
       };
 
-      const res = await axios.post("https://bbpslcrapi.lcrpay.com/apply/auto-loan", payload, { headers });
+      const res = await axios.post(`${BASE_URL}/apply/auto-loan`, payload, { headers });
 
       setLoading(false);
       if (res?.data?.status) navigation.navigate("SuccessScreen");

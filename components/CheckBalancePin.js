@@ -6,6 +6,7 @@ import { history } from "../src/features/wallet/walletSlice";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import axios from "axios";
 import Theme from "./Theme";
+import { BASE_URL } from "../utils/config";
 
 const DIGITS = 6;
 
@@ -116,7 +117,7 @@ const CheckBalancePin = () => {
       console.log("📤 Fetching balance with PIN:", pinString);
 
       const response = await axios.post(
-        "https://bbpslcrapi.lcrpay.com/transaction/gettotalcoins",
+        `${BASE_URL}/transaction/gettotalcoins`,
         { userpin: pinString },
         { headers }
       );
@@ -164,7 +165,7 @@ const CheckBalancePin = () => {
       console.log("📤 Verifying PIN:", pinString);
 
       const response = await axios.post(
-        "https://bbpslcrapi.lcrpay.com/register/verify_transaction_pin",
+        `${BASE_URL}/register/verify_transaction_pin`,
         { pincode: pinString },
         { headers }
       );

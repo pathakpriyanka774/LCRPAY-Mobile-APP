@@ -9,6 +9,7 @@ import AsyncStorage from "@react-native-async-storage/async-storage";
 import axios from "axios";
 import { MaterialIcons } from '@expo/vector-icons';
 import {SafeAreaView} from 'react-native-safe-area-context';
+import { BASE_URL } from "../utils/config";
 
 // NEW: for screenshot + image share
 import ViewShot from "react-native-view-shot";
@@ -93,7 +94,7 @@ const AadhaarDetailsWb = () => {
         Accept: "application/json",
         Authorization: `Bearer ${token}`,
       };
-      const response = await axios.get(`https://bbpslcrapi.lcrpay.com/userAadharDetail/`, { headers });
+      const response = await axios.get(`${BASE_URL}/userAadharDetail/`, { headers });
       if (response.status === 200) setResult(response.data);
       else setErrorText("Unable to fetch Aadhaar details. Please try again.");
     } catch (error) {

@@ -10,6 +10,7 @@ import UserContext from "./src/UserContext";
 import SplashScreen1 from "./screens/SplashScreen1";
 import SplashScreen22 from "./screens/SplashScreen22";
 import SplashScreen3 from "./screens/SplashScreen3";
+import { BASE_URL } from "./utils/config";
 import SplashScreen4 from "./screens/SplashScreen4";
 import SelectedSim from "./components/SelectedSim";
 import Register from "./screens/Register";
@@ -166,6 +167,7 @@ import BludClub from "./components/LearnEarn/BludClub";
 import Insurance from "./components/LearnEarn/Insurance";
 import HelpSupport from "./components/HelpSupport";
 import ProceedToPayment from "./components/miscellaneous/ProceedToPayment";
+import { navigationRef, consumePendingNavigation } from "./RootNavigation";
 
 const Stack = createStackNavigator();
 
@@ -204,7 +206,7 @@ export default function AppNavigator() {
 
         if (!t) return; // no token = no user check
         const headers = { "Content-Type": "application/json", Authorization: `Bearer ${t}` };
-        const resp = await axios.get("https://bbpslcrapi.lcrpay.com/register/check_user", { headers });
+        const resp = await axios.get(`${BASE_URL}/register/check_user`, { headers });
         console.log(resp.data)
         if (!cancelled) setUser(resp.data?.user ?? null);
       } catch (err) {
@@ -246,7 +248,17 @@ export default function AppNavigator() {
     <UserContext>
       <SafeAreaProvider>
         <PaperProvider>
-          <NavigationContainer>
+          <NavigationContainer
+            ref={navigationRef}
+            onReady={async () => {
+              const pending = await consumePendingNavigation();
+              if (pending) {
+                try {
+                  navigationRef.navigate(pending);
+                } catch {}
+              }
+            }}
+          >
             <StatusBar
               barStyle="light-content"
               backgroundColor={Theme.colors.primary}

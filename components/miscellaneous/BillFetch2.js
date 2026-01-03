@@ -10,6 +10,7 @@ import {
   ActivityIndicator,
   Alert,
 } from "react-native";
+import { BASE_URL } from "../../utils/config";
 import { Ionicons } from "@expo/vector-icons";
 import { useNavigation, useRoute } from "@react-navigation/native";
 import moment from "moment";
@@ -88,7 +89,7 @@ const BillFetch2 = () => {
       };
 
       // Get active payment gateway
-      const gatewayRes = await axios.get('https://bbpslcrapi.lcrpay.com/gateways/active', { headers });
+      const gatewayRes = await axios.get(`${BASE_URL}/gateways/active`, { headers });
       const selectedMethod = gatewayRes?.data?.gateway_name?.toLowerCase();
       const PaymentMethods = ['razorpay', 'sabpaisa'];
 

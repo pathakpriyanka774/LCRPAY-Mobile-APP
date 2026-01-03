@@ -24,6 +24,7 @@ import Svg, { Path, Rect } from "react-native-svg";
 import { Calendar } from "react-native-calendars";
 import moment from "moment";
 import DatePicker from "react-native-date-picker";
+import { BASE_URL } from "../../utils/config";
 
 const { width, height } = Dimensions.get("window");
 
@@ -113,7 +114,7 @@ const OfflineAddharKyc = () => {
       };
       // Make POST request
       const response = await axios.post(
-        `https://bbpslcrapi.lcrpay.com/offlineKyc/`,
+        `${BASE_URL}/offlineKyc/`,
         formData,
         { headers }
       );

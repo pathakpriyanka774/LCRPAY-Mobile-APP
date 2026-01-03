@@ -23,6 +23,7 @@ import axios from "axios";
 import Theme from "./Theme";
 import { formatDate } from "../utils";
 import Clipboard from "@react-native-clipboard/clipboard";
+import { BASE_URL } from "../utils/config";
 
 const PRIMARY = Theme?.colors?.primary || "#6A1B9A";
 const SECONDARY = Theme?.colors?.secondary || "#FFFFFF";
@@ -80,7 +81,7 @@ const ReferralScreen = () => {
       };
 
       const response = await axios.post(
-        `https://bbpslcrapi.lcrpay.com/network/direct_network`,
+        `${BASE_URL}/network/direct_network`,
         {},
         { headers }
       );

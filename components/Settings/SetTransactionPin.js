@@ -14,6 +14,7 @@ import axios from "axios";
 import { useSelector } from "react-redux";
 import { useNavigation } from "@react-navigation/native";
 import Theme from "../Theme";
+import { BASE_URL } from "../../utils/config";
 
 const SetTransactionPin = () => {
   const navigation = useNavigation();
@@ -135,7 +136,7 @@ const SetTransactionPin = () => {
       const data = { oldPin: oldPin.join(""), newPin: newPin.join("") };
 
       const response = await axios.post(
-        "https://bbpslcrapi.lcrpay.com/register/update_transaction_pin",
+        `${BASE_URL}/register/update_transaction_pin`,
         data,
         { headers }
       );

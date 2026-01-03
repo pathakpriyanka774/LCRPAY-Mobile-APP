@@ -17,6 +17,7 @@ import axios from "axios";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { Button, Dialog, PaperProvider, Portal } from "react-native-paper";
 import {SafeAreaView} from 'react-native-safe-area-context';
+import { BASE_URL } from "../../utils/config";
 
 const Proceed = () => {
   const [totalAmount, setTotalAmount] = useState(0);
@@ -49,7 +50,7 @@ const Proceed = () => {
     name: holder,
     bankAccount: `${bankName} A/c No. XX XX ${account.slice(-4)}`,
     bankIcon:
-      correctPath(`https://bbpslcrapi.lcrpay.com/${user?.user?.profile}`) || "",
+      correctPath(`${BASE_URL}/${user?.user?.profile}`) || "",
   };
 
   // const handleProceed = () => {
@@ -81,7 +82,7 @@ const Proceed = () => {
         regBankID: id,
       };
       const response = await axios.post(
-        "https://bbpslcrapi.lcrpay.com/payments/withdraw_fund",
+        `${BASE_URL}/payments/withdraw_fund`,
         data,
         {
           headers,

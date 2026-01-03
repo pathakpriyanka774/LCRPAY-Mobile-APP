@@ -19,6 +19,7 @@ import axios from "axios";
 import { Ionicons, MaterialCommunityIcons } from "@expo/vector-icons";
 import { WebView } from "react-native-webview";
 import { getQueryParam } from "../../utils/helper";
+import { BASE_URL } from "../../utils/config";
 
 const { width } = Dimensions.get("window");
 const isSmallDevice = width < 375;
@@ -156,7 +157,7 @@ function PayWithSabpaisa() {
 
     try {
       const { data } = await axios.get(
-        `https://bbpslcrapi.lcrpay.com/service/status/${reference_id}`,
+        `${BASE_URL}/service/status/${reference_id}`,
         { headers }
       );
 
@@ -358,7 +359,7 @@ function PayWithSabpaisa() {
       let response;
       try {
         response = await axios.post(
-          "https://bbpslcrapi.lcrpay.com/payment/create", ContentBody
+          `${BASE_URL}/payment/create`, ContentBody
           ,
           { headers: { "Content-Type": "application/json", ...authHeaders } }
         );
@@ -369,7 +370,7 @@ function PayWithSabpaisa() {
 
         try {
           response = await axios.post(
-            "https://bbpslcrapi.lcrpay.com/payment/create",
+            `${BASE_URL}/payment/create`,
             urlEncoded.toString(),
             { headers: { "Content-Type": "application/x-www-form-urlencoded", ...authHeaders } }
           );

@@ -6,6 +6,7 @@ import axios from 'axios';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import * as LocalAuthentication from "expo-local-authentication";
 import { getIntegrityToken } from '../../utils/integrity';
+import { BASE_URL } from "../../utils/config";
 
 const { width, height } = Dimensions.get('window');
 const isSmallDevice = width < 375;
@@ -74,7 +75,7 @@ const MPinLockScreen = ({ navigation: navProp }) => {
       headers["Authorization"] = `Bearer ${token}`;
 
       const resp = await axios.post(
-        "https://bbpslcrapi.lcrpay.com/register/verify_pin",       // if your router isn't prefixed, use "/verify_pin"
+        `${BASE_URL}/register/verify_pin`,       // if your router isn't prefixed, use "/verify_pin"
         { pincode: code },
         { headers }
       );
@@ -174,7 +175,7 @@ const MPinLockScreen = ({ navigation: navProp }) => {
     try {
       const headers = await getAuthHeaders();
       const response = await axios.get(
-        "https://bbpslcrapi.lcrpay.com/misc/get_fingerprint_status",
+        `${BASE_URL}/misc/get_fingerprint_status`,
         { headers }
       );
       setFingerStatus(response.data?.fingerprint_status);

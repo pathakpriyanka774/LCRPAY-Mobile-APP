@@ -15,6 +15,7 @@ import axios from "axios";
 import { useSelector } from "react-redux";
 import { useNavigation } from "@react-navigation/native";
 import Theme from "../Theme";
+import { BASE_URL } from "../../utils/config";
 
 const DIGITS = 6;
 
@@ -106,7 +107,7 @@ const TransactionPin = () => {
       };
 
       const resp = await axios.post(
-        "https://bbpslcrapi.lcrpay.com/register/create_transaction_pin",
+        `${BASE_URL}/register/create_transaction_pin`,
         { enter_pin: pinString },
         { headers }
       );

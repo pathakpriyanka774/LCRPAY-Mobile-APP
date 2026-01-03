@@ -191,6 +191,8 @@ import { View, StyleSheet, Alert } from "react-native";
 import { useAppStore } from "../../zustand/Store";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import axios from "axios";
+import Theme from "../Theme";
+import { BASE_URL } from "../../utils/config";
 
 export const ScratchCard = ({ style, children, image, img_id }) => {
   const { scratchCards, updateScratchStatus } = useAppStore();
@@ -244,7 +246,7 @@ export const ScratchCard = ({ style, children, image, img_id }) => {
         Authorization: `Bearer ${token}`,
       };
       const response = await axios.post(
-        `https://bbpslcrapi.lcrpay.com/network/scratch_voucher`,
+        `${BASE_URL}/network/scratch_voucher`,
         { voucherid: voucherId },
         { headers }
       );

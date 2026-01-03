@@ -16,6 +16,7 @@ import styles from "./loanScreenStyles";
 import axios from "axios";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { SafeAreaView } from "react-native-safe-area-context";
+import { BASE_URL } from "../../../utils/config";
 
 const MachineryLoanScreen = ({ navigation }) => {
   const loanData = getLoanById("machinery-loan");
@@ -175,7 +176,7 @@ const MachineryLoanScreen = ({ navigation }) => {
       };
 
       const res = await axios.post(
-        "https://bbpslcrapi.lcrpay.com/apply/machine-loan",
+        `${BASE_URL}/apply/machine-loan`,
         payload,
         { headers }
       );

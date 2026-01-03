@@ -16,6 +16,7 @@ import styles from "./loanScreenStyles";
 import axios from "axios";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { SafeAreaView } from "react-native-safe-area-context";
+import { BASE_URL } from "../../../utils/config";
 
 const LAPScreen = ({ navigation }) => {
   const loanData = getLoanById("lap");
@@ -159,7 +160,7 @@ const LAPScreen = ({ navigation }) => {
       };
 
       const res = await axios.post(
-        "https://bbpslcrapi.lcrpay.com/apply/loan-against-property",
+        `${BASE_URL}/apply/loan-against-property`,
         payload,
         { headers }
       );

@@ -16,6 +16,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { history } from "../../src/features/wallet/walletSlice";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import axios from "axios";
+import { BASE_URL } from "../../utils/config";
 
 const ScanPayScreenPin = () => {
   const navigation = useNavigation();
@@ -136,7 +137,7 @@ const ScanPayScreenPin = () => {
       };
 
       const response = await axios.post(
-        "https://bbpslcrapi.lcrpay.com/transaction/p2ptransaction",
+        `${BASE_URL}/transaction/p2ptransaction`,
         {
           amount: numericAmount,
           mobile_number: mobile_number,

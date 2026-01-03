@@ -12,6 +12,7 @@ import {
 } from "react-native";
 import MaterialIcons from "react-native-vector-icons/MaterialIcons";
 import { useAppStore } from "../zustand/Store";
+import { BASE_URL } from "../utils/config";
 
 const CirclePopup = ({ visible, onClose, onSelectCircle, selectedOperator }) => {
   const [circles, setCircles] = useState([]);
@@ -45,7 +46,7 @@ const CirclePopup = ({ visible, onClose, onSelectCircle, selectedOperator }) => 
         Authorization: `Bearer ${token}`,
       };
       const response = await axios.get(
-        "https://bbpslcrapi.lcrpay.com/recharge/circlecode/",
+        `${BASE_URL}/recharge/circlecode/`,
         { headers }
       );
       console.log(response.data.data);

@@ -13,6 +13,7 @@ import {
 import Theme from "./Theme";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import axios from "axios";
+import { BASE_URL } from "../utils/config";
 import { useAppStore } from "../zustand/Store";
 import StatePopup from "./ToSelf/StatePopup";
 import { useNavigation, useRoute } from "@react-navigation/native";
@@ -146,7 +147,7 @@ const ToSelf = () => {
       console.log("this is user Data----> ", data);
 
       const response = await axios.post(
-        "https://bbpslcrapi.lcrpay.com/payments/add_new_bank",
+        `${BASE_URL}/payments/add_new_bank`,
         data,
         { headers }
       );

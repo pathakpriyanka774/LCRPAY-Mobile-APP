@@ -4,6 +4,7 @@ import { useNavigation } from "@react-navigation/native";
 import Theme from "../components/Theme";
 import axios from "axios";
 import AsyncStorage from "@react-native-async-storage/async-storage";
+import { BASE_URL } from "../utils/config";
 
 const VerificationCompleted = () => {
   const navigation = useNavigation();
@@ -19,7 +20,7 @@ const VerificationCompleted = () => {
         Authorization: `Bearer ${token}`,
       };
       const referExist = await axios.get(
-        `https://bbpslcrapi.lcrpay.com/register/does_intro_already_exists`,
+        `${BASE_URL}/register/does_intro_already_exists`,
         { headers }
       );
       console.log(`referal code --->`, referExist.data);

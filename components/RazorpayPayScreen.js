@@ -19,6 +19,7 @@ import axios from "axios";
 import { Ionicons, MaterialCommunityIcons } from "@expo/vector-icons";
 import { useSelector } from "react-redux";
 import { getIntegrityToken } from "../utils/integrity";
+import { BASE_URL } from "../utils/config";
 
 
 const { width, height } = Dimensions.get("window");
@@ -294,7 +295,7 @@ function RazorpayPayScreen() {
       const Payload_data = buildDynamicPayload();
 
       console.log("Dynamic Payload being sent:", Payload_data);
-      const orderRes = await axios.post('https://bbpslcrapi.lcrpay.com/v2/payments/create', Payload_data, { headers });
+      const orderRes = await axios.post(`${BASE_URL}/v2/payments/create`, Payload_data, { headers });
 
       console.log("order creation response received is", orderRes?.data)
 

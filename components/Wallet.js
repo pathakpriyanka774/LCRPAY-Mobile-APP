@@ -1852,6 +1852,7 @@ import AsyncStorage from "@react-native-async-storage/async-storage";
 import Theme from "./Theme";
 import { useDispatch, useSelector } from "react-redux";
 import { creditAmount, history } from "../src/features/wallet/walletSlice";
+import { BASE_URL } from "../utils/config";
 
 const { width, height } = Dimensions.get("window");
 
@@ -2045,7 +2046,7 @@ const Wallet = () => {
       formData.append("amount", amount);
 
       const response = await axios.post(
-        "https://bbpslcrapi.lcrpay.com/recharge/recharge/create-payment",
+        `${BASE_URL}/recharge/recharge/create-payment`,
         formData,
         {
           headers: {

@@ -13,6 +13,7 @@ import {
 import { useNavigation, useRoute } from "@react-navigation/native";
 import { AntDesign } from "@expo/vector-icons";
 import { useDispatch, useSelector } from "react-redux";
+import { BASE_URL } from "../../utils/config";
 import { history } from "../../src/features/wallet/walletSlice";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import axios from "axios";
@@ -136,7 +137,7 @@ const SelfPaymentPin = () => {
       };
 
       const response = await axios.post(
-        "https://bbpslcrapi.lcrpay.com/transaction/p2ptransaction",
+        `${BASE_URL}/transaction/p2ptransaction`,
         {
           amount: numericAmount,
           mobile_number: mobile_number,

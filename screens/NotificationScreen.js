@@ -6,6 +6,7 @@ import { useFocusEffect } from "@react-navigation/native";
 import axios from "axios";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import Theme from "../components/Theme";
+import { BASE_URL } from "../utils/config";
 
 export default function NotificationScreen({ navigation }) {
   const [notifications, setNotifications] = useState([]);
@@ -31,7 +32,7 @@ export default function NotificationScreen({ navigation }) {
       const currentOffset = isLoadMore ? offset + LIMIT : 0;
 
       const response = await axios.get(
-        "https://bbpslcrapi.lcrpay.com/notification/my-notifications",
+        `${BASE_URL}/notification/my-notifications`,
         {
           params: {
             limit: LIMIT,
@@ -94,12 +95,14 @@ export default function NotificationScreen({ navigation }) {
     
     // Check if it's a meeting notification
     const isMeeting = Boolean(dataObj?.meeting_title || dataObj?.deep_link?.includes('meet') || dataObj?.meet_url);
+
+    const externalUrl = dataObj?.type === 'externallink' ? dataObj?.url : undefined;
     
     // Priority order for deep links:
     // 1. deep_link (Google Meet, Teams, etc.)
     // 2. meet_url (Google Meet specific)
     // 3. action_url (promotional links)
-    const deepLink = dataObj?.deep_link || dataObj?.meet_url || dataObj?.action_url;
+    const deepLink = dataObj?.deep_link || dataObj?.meet_url || dataObj?.action_url || externalUrl;
     
     if (isMeeting && deepLink) {
       // For meetings, open the deep link directly
@@ -121,6 +124,7 @@ export default function NotificationScreen({ navigation }) {
     
     // Return appropriate label based on notification type
     if (dataObj?.meeting_title) return "Join Meeting";
+    if (dataObj?.type === 'externallink' && dataObj?.url) return "Open Link";
     if (dataObj?.deep_link) return "Open Link";
     if (dataObj?.action_url) return "View Offer";
     return "Learn More";
@@ -260,7 +264,7 @@ const NotificationCard = React.memo(({ item, onPressAction, onPressCard, formatD
   );
   const ctaLink = dataObj?.cta_link || vars?.["ZOOM LINK"] || vars?.zoom_link || vars?.cta_link;
   const sentAt = item?.sent_at || item?.updated_at;
-  const hasDeepLink = Boolean(dataObj?.deep_link || dataObj?.meet_url || dataObj?.action_url);
+  const hasDeepLink = Boolean(dataObj?.deep_link || dataObj?.meet_url || dataObj?.action_url || (dataObj?.type === 'externallink' && dataObj?.url));
   const isRead = item?.status === 'read';
 
   return (
@@ -303,6 +307,17 @@ const NotificationCard = React.memo(({ item, onPressAction, onPressCard, formatD
         </Text>
       ) : null}
 
+      {dataObj?.type === 'externallink' && dataObj?.url ? (
+        <TouchableOpacity
+          activeOpacity={0.85}
+          onPress={() => Linking.openURL(dataObj.url).catch(() => {})}
+        >
+          <Text style={styles.linkText} numberOfLines={2}>
+            {dataObj.url}
+          </Text>
+        </TouchableOpacity>
+      ) : null}
+
       {/* Handle new deep link format OR old CTA link format */}
       {hasDeepLink ? (
         <TouchableOpacity
@@ -342,7 +357,7 @@ const NotificationDetailModal = React.memo(({ visible, notification, onClose, on
   );
   const ctaLink = dataObj?.cta_link || vars?.["ZOOM LINK"] || vars?.zoom_link || vars?.cta_link;
   const sentAt = notification?.sent_at || notification?.updated_at;
-  const hasDeepLink = Boolean(dataObj?.deep_link || dataObj?.meet_url || dataObj?.action_url);
+  const hasDeepLink = Boolean(dataObj?.deep_link || dataObj?.meet_url || dataObj?.action_url || (dataObj?.type === 'externallink' && dataObj?.url));
 
   return (
     <Modal
@@ -380,6 +395,17 @@ const NotificationDetailModal = React.memo(({ visible, notification, onClose, on
                 resizeMode="cover"
               />
             )}
+
+            {dataObj?.type === 'externallink' && dataObj?.url ? (
+              <TouchableOpacity
+                activeOpacity={0.85}
+                onPress={() => Linking.openURL(dataObj.url).catch(() => {})}
+              >
+                <Text style={styles.linkText}>
+                  {dataObj.url}
+                </Text>
+              </TouchableOpacity>
+            ) : null}
 
             {description && (
               <Text style={styles.modalDescription}>{description}</Text>
@@ -510,10 +536,16 @@ const styles = StyleSheet.create({
     marginBottom: 10,
   },
   description: {
-    fontSize: 15,
+    marginTop: 8,
+    fontSize: 13,
     color: "#4A4A4A",
-    lineHeight: 22,
-    marginBottom: 10,
+    lineHeight: 18,
+  },
+  linkText: {
+    marginTop: 8,
+    fontSize: 13,
+    color: "#5F259F",
+    textDecorationLine: "underline",
   },
   button: {
     marginTop: 4,

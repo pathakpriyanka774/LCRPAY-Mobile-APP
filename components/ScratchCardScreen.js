@@ -13,6 +13,7 @@ import { useSelector } from "react-redux";
 import Theme from "./Theme";
 import { withAlpha } from "../utils/helper";
 import { Modal } from "react-native-paper";
+import { BASE_URL } from "../utils/config";
 import ScratchReward from "./reward/ScratchReward";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { formatDate } from "../utils";
@@ -51,7 +52,7 @@ const ScratchCardScreen = () => {
         if (!userId) return;
 
         const response = await axios.get(
-          `https://bbpslcrapi.lcrpay.com/referral/lcrmoneydetail?userid=${userId}`,
+          `${BASE_URL}/referral/lcrmoneydetail?userid=${userId}`,
           { headers }
         );
 

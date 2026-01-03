@@ -26,6 +26,7 @@ import Theme from "./Theme";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import axios from "axios";
 import { SafeAreaView} from 'react-native-safe-area-context';
+import { BASE_URL } from "../utils/config";
 
 const ChatScreen = () => {
   const navigation = useNavigation();
@@ -154,7 +155,7 @@ const ChatScreen = () => {
       };
 
       const response = await axios.post(
-        "https://bbpslcrapi.lcrpay.com/transaction/p2ptransactionhistory",
+        `${BASE_URL}/transaction/p2ptransactionhistory`,
         { mobile_number: recipientNumber },
         { headers }
       );

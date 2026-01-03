@@ -11,6 +11,7 @@ import Theme from "../Theme";
 import { useNavigation, useRoute } from "@react-navigation/native";
 import axios from "axios";
 import AsyncStorage from "@react-native-async-storage/async-storage";
+import { BASE_URL } from "../../utils/config";
 
 const LabelIncome = () => {
   const navigation = useNavigation();
@@ -40,7 +41,7 @@ const LabelIncome = () => {
       };
 
       const response = await axios.post(
-        `https://bbpslcrapi.lcrpay.com/network/${endpoint}`,
+        `${BASE_URL}/network/${endpoint}`,
         {}, // Empty body, since it's a POST request
         { headers } // Pass headers correctly inside an object
       );

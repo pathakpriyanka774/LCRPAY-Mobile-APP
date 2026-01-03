@@ -7,6 +7,7 @@ import axios from "axios";
 import Theme from "../Theme";
 import { useNavigation, useRoute } from "@react-navigation/native";
 import { normalizeIndianMobile } from "../../utils/helper";
+import { BASE_URL } from "../../utils/config";
 
 const GREEN_TICK = "#22C55E"; // success tick
 
@@ -46,7 +47,7 @@ const RechargeTrxPin = () => {
         "provider": recipient_name
       })
 
-      const { data } = await axios.post("https://bbpslcrapi.lcrpay.com/recharge/get_commision",
+      const { data } = await axios.post(`${BASE_URL}/recharge/get_commision`,
         {
           "amount": amount,
           "provider": recipient_name
@@ -102,7 +103,7 @@ const RechargeTrxPin = () => {
         Authorization: `Bearer ${token}`,
       };
 
-      const gatewayRes = await axios.get('https://bbpslcrapi.lcrpay.com/gateways/active', { headers });
+      const gatewayRes = await axios.get(`${BASE_URL}/gateways/active`, { headers });
       const selectedMethod = gatewayRes?.data?.gateway_name?.toLowerCase();
       const PaymentMethods = ['razorpay', 'sabpaisa'];
 

@@ -1,6 +1,6 @@
 // hooks/notification/setupChannel.js
 import * as Notifications from 'expo-notifications';
-import notifee, { AndroidImportance } from '@notifee/react-native';
+// import notifee, { AndroidImportance } from '@notifee/react-native';
 import NotificationSounds from 'react-native-notification-sounds';
 import { Platform } from 'react-native';
 
@@ -36,14 +36,14 @@ export async function ensureAndroidChannel() {
 
   const systemSoundUrl = await getSystemNotificationSoundUrl();
 
-  // Create the native channel first so the system sound sticks (channel sound is immutable)
-  await notifee.createChannel({
-    id: NOTIFICATION_CHANNEL_ID,
-    name: 'Alerts with sound',
-    importance: AndroidImportance.HIGH,
-    sound: systemSoundUrl || 'default',
-    vibration: true,
-  });
+  // Temporarily disabled Notifee functionality
+  // await notifee.createChannel({
+  //   id: NOTIFICATION_CHANNEL_ID,
+  //   name: 'Alerts with sound',
+  //   importance: AndroidImportance.HIGH,
+  //   sound: systemSoundUrl || 'default',
+  //   vibration: true,
+  // });
 
   await Notifications.setNotificationChannelAsync(NOTIFICATION_CHANNEL_ID, {
     name: 'Alerts with sound',

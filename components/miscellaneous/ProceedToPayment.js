@@ -16,6 +16,7 @@ import AsyncStorage from "@react-native-async-storage/async-storage";
 import axios from "axios";
 import All22Services from "../AllServices/ApiServices";
 import SweetAlert from "../SweetAlert";
+import { BASE_URL } from "../../utils/config";
 
 // Operators database
 const ALL_OPERATORS = [
@@ -236,7 +237,7 @@ const ProceedToPayment = () => {
       };
 
       const gatewayRes = await axios.get(
-        'https://bbpslcrapi.lcrpay.com/gateways/active',
+        `${BASE_URL}/gateways/active`,
         { headers }
       );
 
@@ -485,7 +486,7 @@ const ProceedToPayment = () => {
 
 
       const response = await axios.post(
-        'https://bbpslcrapi.lcrpay.com/api/v1/bbps/bill/validate',
+        `${BASE_URL}/api/v1/bbps/bill/validate`,
         {
           biller_id: biller_id,
           input_params: req_payload,

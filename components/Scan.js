@@ -21,6 +21,7 @@ import { useNavigation } from "@react-navigation/native";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import axios from "axios";
 import { SafeAreaView } from "react-native-safe-area-context";
+import { BASE_URL } from "../utils/config";
 
 const { UPIManager } = NativeModules;
 
@@ -152,7 +153,7 @@ export default function Scan() {
       };
 
       const resp = await axios.post(
-        `https://bbpslcrapi.lcrpay.com/misc/get_member_info`,
+        `${BASE_URL}/misc/get_member_info`,
         { mobile_number: mobile },
         { headers }
       );
@@ -183,7 +184,7 @@ export default function Scan() {
       };
 
       const response = await axios.get(
-        `https://bbpslcrapi.lcrpay.com/misc/check_mobile_number_peer?mobile=${mobileNumber}`,
+        `${BASE_URL}/misc/check_mobile_number_peer?mobile=${mobileNumber}`,
         { headers }
       );
 

@@ -19,6 +19,7 @@ import { useNavigation } from '@react-navigation/native';
 import LottieView from 'lottie-react-native';
 import successAnimation from '../../Animation/success.json';
 import Theme from '../Theme';
+import { BASE_URL } from '../../utils/config';
 
 const ApplyCoupan = () => {
     const dispatch = useDispatch();
@@ -104,7 +105,7 @@ const ApplyCoupan = () => {
                 'Content-Type': 'application/json',
                 Authorization: `Bearer ${token}`,
             };
-            let url = 'https://bbpslcrapi.lcrpay.com/referral/apply-coupan-code';
+            let url = `${BASE_URL}/referral/apply-coupan-code`;
             if (coupanCode && coupanCode.trim()) {
                 url += `?coupan_code=${encodeURIComponent(coupanCode.trim())}`;
             } else {
@@ -159,7 +160,7 @@ const ApplyCoupan = () => {
                 'Content-Type': 'application/json',
                 Authorization: `Bearer ${token}`,
             };
-            const res = await axios.get('https://bbpslcrapi.lcrpay.com/gateways/active', { headers });
+            const res = await axios.get(`${BASE_URL}/gateways/active`, { headers });
             const PaymentMethods = ['razorpay', 'sabpaisa'];
             const selectedMethod = res?.data?.gateway_name;
             console.log('selectedMethod', selectedMethod)

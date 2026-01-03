@@ -13,6 +13,7 @@ import RNPickerSelect from "react-native-picker-select";
 import Theme from "./Theme";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import axios from "axios";
+import { BASE_URL } from "../utils/config";
 import {SafeAreaView} from 'react-native-safe-area-context';
 
 const countryCodes = [
@@ -80,7 +81,7 @@ const ToMobile = () => {
       };
 
       const response = await axios.get(
-        `https://bbpslcrapi.lcrpay.com/misc/check_mobile_number_peer?mobile=${mobileNumber}`,
+        `${BASE_URL}/misc/check_mobile_number_peer?mobile=${mobileNumber}`,
         { headers }
       );
 

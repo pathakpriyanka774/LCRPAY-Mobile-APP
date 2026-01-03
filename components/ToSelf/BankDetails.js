@@ -12,6 +12,7 @@ import {
 import React, { useEffect, useState } from "react";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import axios from "axios";
+import { BASE_URL } from "../../utils/config";
 import { SafeAreaView } from "react-native-safe-area-context";
 import {
   Ban as Bank,
@@ -139,7 +140,7 @@ const BankDetails = () => {
       };
 
       const response = await axios.get(
-        "https://bbpslcrapi.lcrpay.com/payments/get_all_user_accounts?banktype=self",
+        `${BASE_URL}/payments/get_all_user_accounts?banktype=self`,
         { headers }
       );
 

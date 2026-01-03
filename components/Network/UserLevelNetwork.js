@@ -12,6 +12,7 @@ import { useNavigation, useRoute } from "@react-navigation/native";
 import axios from "axios";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { formatDate } from "../../utils";
+import { BASE_URL } from "../../utils/config";
 
 const UserLevelNetwork = () => {
   const navigation = useNavigation();
@@ -40,7 +41,7 @@ const UserLevelNetwork = () => {
       };
 
       const response = await axios.post(
-        `https://bbpslcrapi.lcrpay.com/network/level_network`,
+        `${BASE_URL}/network/level_network`,
         {}, // Empty body, since it's a POST request
         { headers } // Pass headers correctly inside an object
       );

@@ -1,8 +1,7 @@
-import axios from "axios";
-import AsyncStorage from "@react-native-async-storage/async-storage";
-import { getToken } from "../userRegister/UserRegister";
-
-const BASE_URL = "https://bbpslcrapi.lcrpay.com"; // Change this if needed
+import axios from 'axios';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import { getToken } from '../userRegister/UserRegister';
+import { BASE_URL, DEFAULT_HEADERS } from '../../../utils/config';
 
 // const BASE_URL = `http://192.168.1.5:8000`
 

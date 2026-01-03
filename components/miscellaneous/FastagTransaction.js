@@ -16,6 +16,7 @@ import AsyncStorage from "@react-native-async-storage/async-storage";
 import axios from "axios";
 import moment from "moment";
 import { getCategoryDetails } from "../../config/bbpsCategories";
+import { BASE_URL } from "../../utils/config";
 
 const FastagTransaction = () => {
   const navigation = useNavigation();
@@ -54,7 +55,7 @@ const FastagTransaction = () => {
       }
 
       const response = await axios.get(
-        `https://bbpslcrapi.lcrpay.com/api/v1/bbps/billers/ui-info/${selectedOption?.biller_id}`,
+        `${BASE_URL}/api/v1/bbps/billers/ui-info/${selectedOption?.biller_id}`,
         {
           headers: {
             "Content-Type": "application/json",
@@ -152,7 +153,7 @@ const FastagTransaction = () => {
         }
 
         const response = await axios.get(
-          "https://bbpslcrapi.lcrpay.com/v2/payments/bill-fetch/unique-consumers",
+          `${BASE_URL}/v2/payments/bill-fetch/unique-consumers`,
           {
             params: {
               category: endpoint,

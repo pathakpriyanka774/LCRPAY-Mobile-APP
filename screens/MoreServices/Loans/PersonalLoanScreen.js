@@ -16,6 +16,7 @@ import styles from "./loanScreenStyles";
 import axios from "axios";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { SafeAreaView } from "react-native-safe-area-context";
+import { BASE_URL } from "../../../utils/config";
 
 const PersonalLoanScreen = ({ navigation }) => {
   const loanData = getLoanById("personal-loan");
@@ -183,7 +184,7 @@ const PersonalLoanScreen = ({ navigation }) => {
       };
 
       const res = await axios.post(
-        "https://bbpslcrapi.lcrpay.com/apply/personal-loan",
+        `${BASE_URL}/apply/personal-loan`,
         payload,
         { headers }
       );

@@ -12,8 +12,10 @@ import { useFirebaseMessaging } from "./hooks/notification/useFirebaseMessaging"
 import { configureGoogleSignin } from "./components/auth/FirebaseAuthUtils";
 import * as Linking from "expo-linking";
 import axios from "axios";
+import { navigateToNotification } from "./RootNavigation";
 
 import { getIntegrityToken } from "./utils/integrity";
+import { BASE_URL } from "./utils/config";
 
 import { Buffer } from "buffer";
 global.Buffer = Buffer;
@@ -110,7 +112,11 @@ export default function App() {
           Linking.openURL(data.deep_link).catch(err =>
             console.warn("Cannot open deep link:", err)
           );
+          return;
         }
+
+        // Default: open app and go to Notifications
+        navigateToNotification();
       }
     );
 
@@ -134,7 +140,7 @@ export default function App() {
           "X-Integrity-Nonce": nonce,
 
         };
-        const res = await axios.post("https://bbpslcrapi.lcrpay.com/security/verify-device", {
+        const res = await axios.post(`${BASE_URL}/security/verify-device`, {
           integrity_token: token,
           nonce,
         }, { headers });

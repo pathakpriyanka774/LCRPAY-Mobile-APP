@@ -14,6 +14,7 @@ import {
   Alert,
   ActivityIndicator,
 } from "react-native";
+import { BASE_URL } from "../../utils/config";
 import { Ionicons } from "@expo/vector-icons";
 import { useNavigation, useRoute } from "@react-navigation/native";
 import Theme from "../Theme";
@@ -147,7 +148,7 @@ const BillFetch = () => {
         'Content-Type': 'application/json',
         Authorization: `Bearer ${token}`,
       };
-      const res = await axios.get('https://bbpslcrapi.lcrpay.com/gateways/active', { headers });
+      const res = await axios.get(`${BASE_URL}/gateways/active`, { headers });
       const PaymentMethods = ['razorpay', 'sabpaisa'];
       const selectedMethod = res?.data?.gateway_name;
       const finalAmount = Number(amount); // final amount

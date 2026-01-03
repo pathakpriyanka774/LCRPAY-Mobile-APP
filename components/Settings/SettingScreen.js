@@ -14,6 +14,7 @@ import { useNavigation } from "@react-navigation/native";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import axios from "axios";
 import { useSelector } from "react-redux";
+import { BASE_URL } from "../../utils/config";
 import {
   Settings,
   KeyRound,
@@ -48,7 +49,7 @@ const SettingScreen = () => {
       };
 
       const response = await axios.get(
-        "https://bbpslcrapi.lcrpay.com/misc/get_fingerprint_status",
+        `${BASE_URL}/misc/get_fingerprint_status`,
         { headers }
       );
       
@@ -86,7 +87,7 @@ const SettingScreen = () => {
       const newStatus = value ? 1 : 2;
 
       const response = await axios.post(
-        "https://bbpslcrapi.lcrpay.com/misc/set_fingerprint_status",
+        `${BASE_URL}/misc/set_fingerprint_status`,
         { type: newStatus },
         { headers }
       );

@@ -13,6 +13,7 @@ import {
 import { ChevronDown, Smartphone, Home, CheckCircle2, XCircle } from "lucide-react-native";
 import { useNavigation, useRoute } from "@react-navigation/native";
 import moment from "moment";
+import { BASE_URL } from "../../utils/config";
 import { Wallet } from "lucide-react-native";
 
 import Theme from "../Theme";
@@ -325,7 +326,7 @@ const BbpsTransactionSuccess = () => {
                       user?.user?.profile
                         ? {
                           uri: correctPath(
-                            `https://bbpslcrapi.lcrpay.com/${user?.user?.profile}`
+                            `${BASE_URL}/${user?.user?.profile}`
                           ),
                         }
                         : require("../../assets/Profilee.png")

@@ -19,6 +19,7 @@ import axios from "axios";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import * as FileSystem from "expo-file-system/legacy";
 import { Buffer } from "buffer";
+import { BASE_URL } from "../utils/config";
 
 const COLORS = {
   primary: Theme?.colors?.primary || "#5F259F",
@@ -32,8 +33,6 @@ const COLORS = {
   fail: "#DC2626",
   chipBg: "#EFE7FF",
 };
-
-const BASE_URL = "https://bbpslcrapi.lcrpay.com";
 const PAGE_SIZE = 20;
 
 const normStatus = (val) => {
@@ -252,15 +251,15 @@ const History = () => {
       let selectRows = (data) => [];
 
       if (tabName === "Bill Payments") {
-        url = "https://bbpslcrapi.lcrpay.com/transaction/payment/history";
+        url = `${BASE_URL}/transaction/payment/history`;
         mapper = toUnifiedFromBiller;
         selectRows = (data) => (Array.isArray(data?.data) ? data.data : []);
       } else if (tabName === "LCR Money") {
-        url = "https://bbpslcrapi.lcrpay.com/transaction/lcr_money_history";
+        url = `${BASE_URL}/transaction/lcr_money_history`;
         mapper = toUnifiedFromLcr;
         selectRows = (data) => (Array.isArray(data?.records) ? data.records : []);
       } else if (tabName === "LCR Reward") {
-        url = "https://bbpslcrapi.lcrpay.com/transaction/lcr_rewards_history";
+        url = `${BASE_URL}/transaction/lcr_rewards_history`;
         mapper = toUnifiedFromLcrReward;
         selectRows = (data) => (Array.isArray(data?.records) ? data.records : []);
       }

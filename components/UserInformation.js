@@ -10,6 +10,7 @@ import { userData } from "../src/features/userRegister/RegisterSlice";
 import { signInWithGoogle, userLogout } from './auth/FirebaseAuthUtils';
 import { useFirebaseUser } from "./auth/useFirebaseUser";
 import { SafeAreaView } from "react-native-safe-area-context";
+import { BASE_URL } from "../utils/config";
 const { width } = Dimensions.get("window");
 
 const toText = (val) => {
@@ -247,7 +248,7 @@ const UserInformation = () => {
 
       // TODO: change endpoint/body to your real API
       const resp = await axios.post(
-        "https://bbpslcrapi.lcrpay.com/register/update_email",
+        `${BASE_URL}/register/update_email`,
         { email: newEmail },
         { headers }
       );
@@ -310,7 +311,7 @@ const UserInformation = () => {
       }
 
       const response = await axios.get(
-        `https://bbpslcrapi.lcrpay.com/referral/validate-referral?member_id=${modalReferral.trim()}`,
+        `${BASE_URL}/referral/validate-referral?member_id=${modalReferral.trim()}`,
         {
           headers: {
             Authorization: `Bearer ${token}`,
@@ -365,7 +366,7 @@ const UserInformation = () => {
 
       // Step 1: Register the referral relationship
       const response = await axios.post(
-        "https://bbpslcrapi.lcrpay.com/register/update-referal/",
+        `${BASE_URL}/register/update-referal/`,
         {
           refererID: modalReferral
         },

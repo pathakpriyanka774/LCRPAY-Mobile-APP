@@ -12,6 +12,7 @@ import { ChevronDown, Smartphone } from "lucide-react-native";
 import { useNavigation, useRoute } from "@react-navigation/native";
 import { useSelector } from "react-redux";
 import { correctPath } from "../../utils";
+import { BASE_URL } from "../../utils/config";
 import moment from "moment";
 import { Wallet } from "lucide-react-native";
 
@@ -218,7 +219,7 @@ const transactionDetails = {
                     user?.user?.profile
                       ? {
                           uri: correctPath(
-                            `https://bbpslcrapi.lcrpay.com/${user?.user?.profile}`
+                            `${BASE_URL}/${user?.user?.profile}`
                           ),
                         }
                       : require("../../assets/Profilee.png")

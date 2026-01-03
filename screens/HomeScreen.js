@@ -14,6 +14,7 @@ import { getAadharDetail } from "../src/features/aadharKyc/AadharSlice";
 import WhatsAppLogo from "../assets/whatsApp.png"
 import { LinearGradient } from "expo-linear-gradient";
 import { withAlpha } from "../utils/helper";
+import { BASE_URL } from "../utils/config";
 import { useCameraPermission } from "react-native-vision-camera";
 
 
@@ -226,7 +227,7 @@ const HomeScreen = ({ navigation }) => {
         Authorization: `Bearer ${token}`,
       };
       const response = await axios.get(
-        `https://bbpslcrapi.lcrpay.com/misc/get_kyc_mode`,
+        `${BASE_URL}/misc/get_kyc_mode`,
         { headers }
       );
       console.log(`this is kyc mode ------>`, response.data);
@@ -349,7 +350,7 @@ const HomeScreen = ({ navigation }) => {
       headers["Authorization"] = `Bearer ${token}`;
 
       const response = await axios.get(
-        "https://bbpslcrapi.lcrpay.com/misc/get_fingerprint_status",
+        `${BASE_URL}/misc/get_fingerprint_status`,
         {
           headers: {
             "Content-Type": "application/json",
@@ -376,7 +377,7 @@ const HomeScreen = ({ navigation }) => {
 
       console.log(fingerStatus)
       const response = await axios.post(
-        "https://bbpslcrapi.lcrpay.com/misc/set_fingerprint_status",
+        `${BASE_URL}/misc/set_fingerprint_status`,
         { type: fingerStatus },
         {
           headers: {
@@ -412,7 +413,7 @@ const HomeScreen = ({ navigation }) => {
         Authorization: `Bearer ${token}`,
       };
       const response = await axios.get(
-        `https://bbpslcrapi.lcrpay.com/misc/get_news`,
+        `${BASE_URL}/misc/get_news`,
         { headers }
       );
       console.log(`misc/get_new------>`, response.data);
@@ -544,14 +545,14 @@ const HomeScreen = ({ navigation }) => {
                 <TouchableOpacity onPress={() => navigation.navigate("NotificationScreen")}>
                   <MaterialIcons
                     name="notifications"
-                    size={24}
+                    size={20}
                     color={Theme.colors.secondary}
                   />
                 </TouchableOpacity>
                 <TouchableOpacity onPress={() => navigation.navigate("HelpSupport")}>
                   <MaterialIcons
                     name="help-outline"
-                    size={24}
+                    size={20}
                     color={Theme.colors.secondary}
                   />
                 </TouchableOpacity>
@@ -734,7 +735,7 @@ const HomeScreen = ({ navigation }) => {
             {/*Recharge  */}
             {/* ===================================================================================== */}
 
-            <View style={styles.rechargeAndPayBillsContainer}>
+            <View style={[styles.rechargeAndPayBillsContainer,{ marginTop: 6 }]}>
               <View style={styles.rechargeAndPayBills}>
                 <View style={styles.sectionRow}>
                   <Text style={styles.sectionTitle}>Recharge</Text>
@@ -751,15 +752,12 @@ const HomeScreen = ({ navigation }) => {
                     <LinearGradient colors={ICON_GRADIENT} style={styles.iconContainer}>
                       <MaterialIcons
                         name="smartphone"
-                        size={24}
+                        size={20}
                         color={Theme.colors.secondary}
                       />
                     </LinearGradient>
                     <Text style={styles.serviceCardText}>Mobile{"\n"}Prepaid</Text>
                   </TouchableOpacity>
-
-
-
 
                   <TouchableOpacity
                     style={styles.serviceCard}
@@ -775,39 +773,48 @@ const HomeScreen = ({ navigation }) => {
                     <LinearGradient colors={ICON_GRADIENT} style={styles.iconContainer}>
                       <MaterialIcons
                         name="settings-input-antenna"
-                        size={24}
+                        size={20}
                         color={Theme.colors.secondary}
                       />
                     </LinearGradient>
                     <Text style={styles.serviceCardText}>DTH</Text>
                   </TouchableOpacity>
 
-
-
+                  <TouchableOpacity
+                    style={[styles.serviceCard, { opacity: 0.6 }]}
+                    disabled={true}
+                  >
+                    <LinearGradient colors={ICON_GRADIENT} style={styles.iconContainer}>
+                      <MaterialIcons
+                        name="directions-car"
+                        size={20}
+                        color={Theme.colors.secondary}
+                      />
+                    </LinearGradient>
+                    <Text style={styles.serviceCardText}>FASTag</Text>
+                    <Text style={[styles.serviceCardText, { fontSize: 9, color: '#000', marginTop: 2 }]}>Coming soon</Text>
+                  </TouchableOpacity>
 
                   <TouchableOpacity
                     style={styles.serviceCard}
                     onPress={() =>
                       navigation.navigate("FastagTransaction", {
-                        endpoint: "Fastag",
-                        name: "FASTAG Recharge",
-                        btnName: "Add New Vehicle",
-                        reminder: "Zip through toll Plazas",
+                        endpoint: "Mobile Postpaid",
+                        name: "Mobile Postpaid Recharge",
+                        btnName: "Pay Mobile Bill",
+                        reminder: "Pay Mobile Postpaid Bill",
                       })
                     }
                   >
                     <LinearGradient colors={ICON_GRADIENT} style={styles.iconContainer}>
                       <MaterialIcons
-                        name="directions-car"
-                        size={24}
+                        name="phone-android"
+                        size={20}
                         color={Theme.colors.secondary}
                       />
                     </LinearGradient>
-                    <Text style={styles.serviceCardText}>FASTag</Text>
+                    <Text style={styles.serviceCardText}>Mobile{"\n"}Postpaid</Text>
                   </TouchableOpacity>
-
-
-
 
                 </View>
               </View>
@@ -819,14 +826,16 @@ const HomeScreen = ({ navigation }) => {
             {/*Bill's Pay  */}
             {/* ===================================================================================== */}
 
-            <View style={[styles.insuranceSection, { marginTop: 6 }]}>
-              <View style={styles.sectionRow}>
-                <Text style={styles.sectionTitle}>Bill's Pay</Text>
-                <TouchableOpacity onPress={() => navigation.navigate("AllServices")}>
-                  <Text style={styles.viewAllLink}>View All</Text>
-                </TouchableOpacity>
-              </View>
-              <View style={styles.serviceGrid}>
+            <View style={[styles.rechargeAndPayBillsContainer, { marginTop: 6 }]}>
+              <View style={[styles.rechargeAndPayBills]}>
+                <View style={styles.sectionInner}>
+                  <View style={styles.sectionRow}>
+                    <Text style={styles.sectionTitle}>Bill's Pay</Text>
+                    <TouchableOpacity onPress={() => navigation.navigate("AllServices")}>
+                      <Text style={styles.viewAllLink}>View All</Text>
+                    </TouchableOpacity>
+                  </View>
+                  <View style={styles.serviceGrid}>
 
                 <TouchableOpacity
                   style={styles.serviceCard}
@@ -842,13 +851,12 @@ const HomeScreen = ({ navigation }) => {
                   <LinearGradient colors={ICON_GRADIENT} style={styles.iconContainer}>
                     <MaterialIcons
                       name="electrical-services"
-                      size={24}
+                      size={20}
                       color={Theme.colors.secondary}
                     />
                   </LinearGradient>
                   <Text style={styles.serviceCardText}>Electricity</Text>
                 </TouchableOpacity>
-
 
                 <TouchableOpacity
                   style={styles.serviceCard}
@@ -864,15 +872,12 @@ const HomeScreen = ({ navigation }) => {
                   <LinearGradient colors={ICON_GRADIENT} style={styles.iconContainer}>
                     <MaterialIcons
                       name="phone-in-talk"
-                      size={24}
+                      size={20}
                       color={Theme.colors.secondary}
                     />
                   </LinearGradient>
                   <Text style={styles.serviceCardText}>Landline</Text>
                 </TouchableOpacity>
-
-
-
 
                 <TouchableOpacity
                   style={styles.serviceCard}
@@ -888,27 +893,50 @@ const HomeScreen = ({ navigation }) => {
                   <LinearGradient colors={ICON_GRADIENT} style={styles.iconContainer}>
                     <MaterialIcons
                       name="wifi"
-                      size={24}
+                      size={20}
                       color={Theme.colors.secondary}
                     />
                   </LinearGradient>
                   <Text style={styles.serviceCardText}>Broadband</Text>
                 </TouchableOpacity>
 
-              </View>
+                <TouchableOpacity
+                  style={styles.serviceCard}
+                  onPress={() =>
+                    navigation.navigate("FastagTransaction", {
+                      endpoint: "Water",
+                      name: "Water Bill Payment",
+                      btnName: "Pay Water Bill",
+                      reminder: "Pay Water Bill",
+                    })
+                  }
+                >
+                  <LinearGradient colors={ICON_GRADIENT} style={styles.iconContainer}>
+                    <MaterialIcons
+                      name="water-drop"
+                      size={20}
+                      color={Theme.colors.secondary}
+                    />
+                  </LinearGradient>
+                  <Text style={styles.serviceCardText}>Water</Text>
+                </TouchableOpacity>
 
+                  </View>
+                </View>
+              </View>
             </View>
 
             {/* ===================================================================================== */}
             {/*More Services */}
             {/* ===================================================================================== */}
-            <View style={[styles.insuranceSection, { marginTop: 6 }]}>
-              <View style={styles.sectionRow}>
-                <Text style={styles.sectionTitle}>Learn & Earn</Text>
-                <TouchableOpacity onPress={() => navigation.navigate("AllServices")}>
-                  <Text style={styles.viewAllLink}>View All</Text>
-                </TouchableOpacity>
-              </View>
+            <View style={[styles.insuranceSectionContainer, { marginTop: 6 }]}>
+              <View style={styles.insuranceSection}>
+                <View style={styles.sectionRow}>
+                  <Text style={styles.sectionTitle}>Learn & Earn</Text>
+                  <TouchableOpacity onPress={() => navigation.navigate("AllServices")}>
+                    <Text style={styles.viewAllLink}>View All</Text>
+                  </TouchableOpacity>
+                </View>
               <View style={styles.serviceGrid}>
 
                 <TouchableOpacity
@@ -918,7 +946,7 @@ const HomeScreen = ({ navigation }) => {
                   <LinearGradient colors={ICON_GRADIENT} style={styles.iconContainer}>
                     <MaterialIcons
                       name="account-balance-wallet"
-                      size={24}
+                      size={20}
                       color={Theme.colors.secondary}
                     />
                   </LinearGradient>
@@ -932,7 +960,7 @@ const HomeScreen = ({ navigation }) => {
                   <LinearGradient colors={ICON_GRADIENT} style={styles.iconContainer}>
                     <MaterialIcons
                       name="home-work"
-                      size={24}
+                      size={20}
                       color={Theme.colors.secondary}
                     />
                   </LinearGradient>
@@ -948,7 +976,7 @@ const HomeScreen = ({ navigation }) => {
                   <LinearGradient colors={ICON_GRADIENT} style={styles.iconContainer}>
                     <MaterialIcons
                       name="verified-user"
-                      size={24}
+                      size={20}
                       color={Theme.colors.secondary}
                     />
                   </LinearGradient>
@@ -962,7 +990,7 @@ const HomeScreen = ({ navigation }) => {
                   <LinearGradient colors={ICON_GRADIENT} style={styles.iconContainer}>
                     <MaterialIcons
                       name="volunteer-activism"
-                      size={24}
+                      size={20}
                       color={Theme.colors.secondary}
                     />
                   </LinearGradient>
@@ -979,7 +1007,7 @@ const HomeScreen = ({ navigation }) => {
                   <LinearGradient colors={ICON_GRADIENT} style={styles.iconContainer}>
                     <MaterialIcons
                       name="school"
-                      size={24}
+                      size={20}
                       color={Theme.colors.secondary}
                     />
                   </LinearGradient>
@@ -995,7 +1023,7 @@ const HomeScreen = ({ navigation }) => {
                   <LinearGradient colors={ICON_GRADIENT} style={styles.iconContainer}>
                     <MaterialIcons
                       name="campaign"
-                      size={24}
+                      size={20}
                       color={Theme.colors.secondary}
                     />
                   </LinearGradient>
@@ -1005,8 +1033,8 @@ const HomeScreen = ({ navigation }) => {
                 </TouchableOpacity>
 
 
+                </View>
               </View>
-
             </View>
 
 
@@ -1023,7 +1051,6 @@ const HomeScreen = ({ navigation }) => {
                 </View>
                 <View style={styles.serviceGrid}>
 
-
                   <TouchableOpacity
                     style={styles.serviceCard}
                     onPress={() =>
@@ -1038,7 +1065,7 @@ const HomeScreen = ({ navigation }) => {
                     <LinearGradient colors={ICON_GRADIENT} style={styles.iconContainer}>
                       <MaterialIcons
                         name="local-gas-station"
-                        size={24}
+                        size={20}
                         color={Theme.colors.secondary}
                       />
                     </LinearGradient>
@@ -1059,7 +1086,7 @@ const HomeScreen = ({ navigation }) => {
                     <LinearGradient colors={ICON_GRADIENT} style={styles.iconContainer}>
                       <MaterialIcons
                         name="propane"
-                        size={24}
+                        size={20}
                         color={Theme.colors.secondary}
                       />
                     </LinearGradient>
@@ -1080,12 +1107,34 @@ const HomeScreen = ({ navigation }) => {
                     <LinearGradient colors={ICON_GRADIENT} style={styles.iconContainer}>
                       <MaterialIcons
                         name="home-work"
-                        size={24}
+                        size={20}
                         color={Theme.colors.secondary}
                       />
                     </LinearGradient>
                     <Text style={styles.serviceCardText}>Rent</Text>
                   </TouchableOpacity>
+
+                  <TouchableOpacity
+                    style={styles.serviceCard}
+                    onPress={() =>
+                      navigation.navigate("FastagTransaction", {
+                        endpoint: "Municipal Tax",
+                        name: "Municipal Tax Payment",
+                        btnName: "Pay Municipal Tax",
+                        reminder: "Pay Municipal Tax",
+                      })
+                    }
+                  >
+                    <LinearGradient colors={ICON_GRADIENT} style={styles.iconContainer}>
+                      <MaterialIcons
+                        name="account-balance"
+                        size={20}
+                        color={Theme.colors.secondary}
+                      />
+                    </LinearGradient>
+                    <Text style={styles.serviceCardText}>Municipal{"\n"}Tax</Text>
+                  </TouchableOpacity>
+
                 </View>
               </View>
             </View>
@@ -1094,14 +1143,15 @@ const HomeScreen = ({ navigation }) => {
             {/* ===================================================================================== */}
             {/*Finance */}
             {/* ===================================================================================== */}
-            <View style={styles.insuranceSection}>
-              <View style={styles.sectionRow}>
-                <Text style={styles.sectionTitle}>Finance</Text>
-                <TouchableOpacity onPress={() => navigation.navigate("AllServices")}>
-                  <Text style={styles.viewAllLink}>View All</Text>
-                </TouchableOpacity>
-              </View>
-              <View style={styles.serviceGrid}>
+            <View style={styles.insuranceSectionContainer}>
+              <View style={styles.insuranceSection}>
+                <View style={styles.sectionRow}>
+                  <Text style={styles.sectionTitle}>Finance</Text>
+                  <TouchableOpacity onPress={() => navigation.navigate("AllServices")}>
+                    <Text style={styles.viewAllLink}>View All</Text>
+                  </TouchableOpacity>
+                </View>
+                <View style={styles.serviceGrid}>
                 <TouchableOpacity
                   style={styles.serviceCard}
                   onPress={() =>
@@ -1116,7 +1166,7 @@ const HomeScreen = ({ navigation }) => {
                   <LinearGradient colors={ICON_GRADIENT} style={styles.iconContainer}>
                     <MaterialIcons
                       name="credit-score"
-                      size={24}
+                      size={20}
                       color={Theme.colors.secondary}
                     />
                   </LinearGradient>
@@ -1137,13 +1187,11 @@ const HomeScreen = ({ navigation }) => {
                   <LinearGradient colors={ICON_GRADIENT} style={styles.iconContainer}>
                     <MaterialIcons
                       name="request-quote"
-                      size={24}
+                      size={20}
                       color={Theme.colors.secondary}
                     />
                   </LinearGradient>
-                  <Text style={styles.serviceCardText}>
-                    Loan{"\n"}Repayment
-                  </Text>
+                  <Text style={styles.serviceCardText}>Loan{"\n"}Payment</Text>
                 </TouchableOpacity>
 
                 <TouchableOpacity
@@ -1160,7 +1208,7 @@ const HomeScreen = ({ navigation }) => {
                   <LinearGradient colors={ICON_GRADIENT} style={styles.iconContainer}>
                     <MaterialIcons
                       name="health-and-safety"
-                      size={24}
+                      size={20}
                       color={Theme.colors.secondary}
                     />
                   </LinearGradient>
@@ -1181,7 +1229,7 @@ const HomeScreen = ({ navigation }) => {
                   <LinearGradient colors={ICON_GRADIENT} style={styles.iconContainer}>
                     <MaterialIcons
                       name="currency-exchange"
-                      size={24}
+                      size={20}
                       color={Theme.colors.secondary}
                     />
                   </LinearGradient>
@@ -1189,6 +1237,7 @@ const HomeScreen = ({ navigation }) => {
                     Recurring{"\n"}Deposit
                   </Text>
                 </TouchableOpacity>
+              </View>
               </View>
             </View>
 
@@ -1202,7 +1251,7 @@ const HomeScreen = ({ navigation }) => {
           {/* Bottom Tab Bar */}
           <View style={styles.bottomNavigation}>
             <TouchableOpacity style={styles.bottomNavItem}>
-              <MaterialIcons name="home" size={24} color={Theme.colors.secondary} />
+              <MaterialIcons name="home" size={20} color={Theme.colors.secondary} />
               <Text style={styles.bottomNavText}>Home</Text>
             </TouchableOpacity>
 
@@ -1213,7 +1262,7 @@ const HomeScreen = ({ navigation }) => {
             >
               <MaterialIcons
                 name="swap-horiz"
-                size={24}
+                size={20}
                 color={Theme.colors.secondary}
               />
               <Text style={styles.bottomNavText}>History</Text>
@@ -1224,7 +1273,7 @@ const HomeScreen = ({ navigation }) => {
                 <View style={styles.circle}>
                   <MaterialIcons
                     name="qr-code-scanner"
-                    size={45}
+                    size={35}
                     color={Theme.colors.primary}
                   />
                 </View>
@@ -1237,7 +1286,7 @@ const HomeScreen = ({ navigation }) => {
             >
               <MaterialIcons
                 name="search"
-                size={24}
+                size={20}
                 color={Theme.colors.secondary}
               />
               <Text style={styles.bottomNavText}>Search</Text>
@@ -1251,7 +1300,7 @@ const HomeScreen = ({ navigation }) => {
                   : navigation.navigate("SettingScreen");
               }}
             >
-              <MaterialIcons name="money" size={24} color={Theme.colors.secondary} />
+              <MaterialIcons name="money" size={20} color={Theme.colors.secondary} />
               <Text style={styles.bottomNavText}>Balance</Text>
             </TouchableOpacity>
           </View>
@@ -1413,13 +1462,13 @@ const styles = StyleSheet.create({
     textAlign: "center",
   },
   iconContainer: {
-    padding: 10,
+    padding: 8,
     borderRadius: 50,
     shadowColor: "#000",
     shadowOpacity: 0.2,
     shadowRadius: 5,
     elevation: 5,
-    marginBottom: 5,
+    marginBottom: 4,
   },
   upiContainer: {
     flexDirection: "row",
@@ -1472,7 +1521,7 @@ const styles = StyleSheet.create({
   },
   feature: {
     alignItems: "center",
-    backgroundColor: Theme.colors.secondary,
+    backgroundColor: "#DAA520",
     height: 60,
     width: 165,
     borderRadius: 10,
@@ -1490,10 +1539,11 @@ const styles = StyleSheet.create({
     marginRight: 5,
   },
   featureText: {
-    color: Theme.colors.primary,
-    fontSize: 12,
+    color: "#000000",
+    fontSize: 15,
     marginTop: 5,
     textAlign: "center",
+    fontWeight: "900",
   },
   bbpscontainerlogo: {
     backgroundColor: Theme.colors.primary,
@@ -1515,36 +1565,41 @@ const styles = StyleSheet.create({
   },
 
   rechargeAndPayBillsContainer: {
-    backgroundColor: Theme.colors.secondary,
+    backgroundColor: Theme.colors.primary,
     borderRadius: 10,
     marginVertical: 1,
     width: "95%",
     alignSelf: "center",
+    borderWidth: 2,
+    borderColor: "#DAA520",
   },
-  rechargeAndPayBills: { padding: 15 },
+  rechargeAndPayBills: { padding: 15, borderWidth: 2, borderColor: "#000000", borderRadius: 8 },
   sectionRow: { flexDirection: "row", alignItems: "center", justifyContent: "space-between", marginBottom: 10 },
-  viewAllLink: { color: Theme.colors.primary, fontWeight: "700", fontSize: 12, textDecorationLine: "underline" },
-  serviceGrid: { flexDirection: "row", flexWrap: "wrap", gap: 9 },
+  viewAllLink: { color: "#ffffff", fontWeight: "700", fontSize: 12, textDecorationLine: "underline" },
+  serviceGrid: { flexDirection: "row", flexWrap: "wrap", gap: 4 },
   serviceCard: {
-    width: "23%",
+    width: "23.5%",
     alignItems: "center",
-    backgroundColor: Theme.colors.white,
+    backgroundColor: "#DAA520",
     borderRadius: 12,
-    paddingVertical: 10,
+    paddingVertical: 8,
+    paddingHorizontal: 2,
     marginBottom: 12,
-    borderWidth: 1,
-    borderColor: Theme.colors.borderLight,
+    borderWidth: 2,
+    borderColor: "#000000",
     ...Platform.select({ ios: { shadowColor: "#000", shadowOpacity: 0.06, shadowRadius: 6, shadowOffset: { width: 0, height: 2 } }, android: { elevation: 2 } })
   },
-  serviceCardText: { color: Theme.colors.primary, fontSize: 11, marginTop: 6, textAlign: "center" },
+  serviceCardText: { color: "#000000", fontSize: 11, marginTop: 6, textAlign: "center", fontWeight: "900", lineHeight: 13 },
   loanSectionContainer: {
-    backgroundColor: Theme.colors.secondary,
+    backgroundColor: Theme.colors.primary,
     borderRadius: 10,
     marginVertical: 5,
     width: "95%",
     alignSelf: "center",
+    borderWidth: 2,
+    borderColor: "#DAA520",
   },
-  loanSection: { padding: 15 },
+  loanSection: { padding: 15, borderWidth: 2, borderColor: "#000000", borderRadius: 8 },
   viewAllButton: {
     position: "absolute",
     top: 15,
@@ -1556,8 +1611,9 @@ const styles = StyleSheet.create({
     fontWeight: "bold",
     textDecorationLine: "underline",
   },
-  insuranceSection: { paddingHorizontal: 15, paddingVertical: 15, backgroundColor: Theme.colors.secondary, borderRadius: 10, marginVertical: 1, width: "95%", alignSelf: "center" },
-  sectionTitle: { fontSize: 16, fontWeight: "900", marginBottom: 0, color: Theme.colors.text },
+  insuranceSection: { padding: 15, borderWidth: 2, borderColor: "#000000", borderRadius: 8 },
+  insuranceSectionContainer: { backgroundColor: Theme.colors.primary, borderRadius: 10, marginVertical: 1, width: "95%", alignSelf: "center", borderWidth: 2, borderColor: "#DAA520" },
+  sectionTitle: { fontSize: 16, fontWeight: "900", marginBottom: 0, color: "#ffffff" },
   moreSectionContainer: {
     backgroundColor: Theme.colors.secondary,
     paddingVertical: 10,
@@ -1604,9 +1660,9 @@ const styles = StyleSheet.create({
     bottom: -15,
   },
   circle: {
-    width: 80,
-    height: 80,
-    borderRadius: 60,
+    width: 65,
+    height: 65,
+    borderRadius: 50,
     backgroundColor: Theme.colors.secondary,
     justifyContent: "center",
     alignItems: "center",

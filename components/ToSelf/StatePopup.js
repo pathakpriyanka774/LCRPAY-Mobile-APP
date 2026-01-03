@@ -12,6 +12,7 @@ import {
 import MaterialIcons from "react-native-vector-icons/MaterialIcons";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import axios from "axios";
+import { BASE_URL } from "../../utils/config";
 import CityPopup from "./CityPopup";
 
 const StatePopup = ({ visible, onClose, onSelectBranch, selectedBank }) => {
@@ -42,7 +43,7 @@ const StatePopup = ({ visible, onClose, onSelectBranch, selectedBank }) => {
       };
 
       const response = await axios.post(
-        "https://bbpslcrapi.lcrpay.com/payments/get-all-branchs",
+        `${BASE_URL}/payments/get-all-branchs`,
         {
           bankName: selectedBank,
         },

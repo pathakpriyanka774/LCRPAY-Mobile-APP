@@ -1,10 +1,12 @@
+import { API_ENDPOINTS, DEFAULT_HEADERS } from '../../../utils/config';
+
 export function busDataApi(data) {
   return new Promise(async (resolve, reject) => {
     try {
-      const resp = await fetch("https://api.hbadigitalindia.com/buses", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(data), // Including body with GET
+      const resp = await fetch(API_ENDPOINTS.BUSES, {
+        method: 'POST',
+        headers: DEFAULT_HEADERS,
+        body: JSON.stringify(data),
       });
 
       if (!resp.ok) {
@@ -24,10 +26,10 @@ export function busDataApi(data) {
 export function busChartApi(data) {
   return new Promise(async (resolve, reject) => {
     try {
-      const resp = await fetch("https://api.hbadigitalindia.com/busChart", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(data), // Including body with GET
+      const resp = await fetch(API_ENDPOINTS.BUS_CHART, {
+        method: 'POST',
+        headers: DEFAULT_HEADERS,
+        body: JSON.stringify(data),
       });
 
       if (!resp.ok) {

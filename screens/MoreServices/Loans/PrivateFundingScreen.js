@@ -17,6 +17,7 @@ import { SafeAreaView } from "react-native-safe-area-context";
 import axios from "axios";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { useNavigation } from "@react-navigation/native";
+import { BASE_URL } from "../../../utils/config";
 
 const PrivateFundingScreen = () => {
   const loanData = getLoanById("private-funding");
@@ -169,7 +170,7 @@ const PrivateFundingScreen = () => {
 
       // FIXED: Correct Axios format
       const res = await axios.post(
-        "https://bbpslcrapi.lcrpay.com/apply/private-funding",
+        `${BASE_URL}/apply/private-funding`,
         payload,
         { headers }
       );

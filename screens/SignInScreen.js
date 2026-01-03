@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState } from 'react';
 import {
   View,
   Text,
@@ -8,12 +8,13 @@ import {
   Modal,
   Alert,
   ActivityIndicator,
-} from "react-native";
-import { Ionicons, MaterialIcons } from "@expo/vector-icons";
-import { useNavigation } from "@react-navigation/native";
-import Theme from "../components/Theme";
-import axios from "axios";
-import AsyncStorage from "@react-native-async-storage/async-storage";
+} from 'react-native';
+import { Ionicons, MaterialIcons } from '@expo/vector-icons';
+import { useNavigation } from '@react-navigation/native';
+import Theme from '../components/Theme';
+import axios from 'axios';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import { BASE_URL } from '../utils/config';
 
 const SignInScreen = () => {
   const [emailOrPhone, setEmailOrPhone] = useState("");
@@ -79,7 +80,7 @@ const SignInScreen = () => {
       };
 
       const response = await axios.post(
-        `https://bbpslcrapi.lcrpay.com/register/user_login/`,
+        `${BASE_URL}/register/user_login/`,
         {
           email_or_number: emailOrPhone,
           password: password,

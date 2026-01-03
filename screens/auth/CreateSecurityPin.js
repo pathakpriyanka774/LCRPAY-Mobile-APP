@@ -17,6 +17,7 @@ import AsyncStorage from "@react-native-async-storage/async-storage";
 import axios from "axios";
 import { useSelector } from "react-redux";
 import { useNavigation } from "@react-navigation/native";
+import { BASE_URL } from "../../utils/config";
 
 const { width, height } = Dimensions.get("window");
 const PIN_LEN = 6;
@@ -119,7 +120,7 @@ const CreateSecurityPin = () => {
 
       // ✅ keep it as string to preserve leading zeros
       const response = await axios.post(
-        "https://bbpslcrapi.lcrpay.com/register/create_pin",
+        `${BASE_URL}/register/create_pin`,
         { enter_pin: pinString },
         {
           headers: {

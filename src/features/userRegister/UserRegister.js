@@ -3,10 +3,8 @@ import { Alert } from "react-native";
 import axios from "axios";
 import { CommonActions } from '@react-navigation/native'; // Make sure this is at the top
 
-const BASE_URL = "https://bbpslcrapi.lcrpay.com";
-
-
 import { getIntegrityToken } from "../../../utils/integrity";
+import { BASE_URL } from "../../../utils/config";
 
 
 // Centralized API request function
