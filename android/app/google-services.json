@@ -12,7 +12,12 @@
           "package_name": "com.LcrPay.LcrPay"
         }
       },
-      "oauth_client": [],
+      "oauth_client": [
+        {
+          "client_id": "133165741694-6hqk5bdald13vpdal1092q63c6i34esa.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
       "api_key": [
         {
           "current_key": "AIzaSyCxaNlyrEi6fH4VTQYnO0fo5rc7sGmRSLQ"
@@ -20,7 +25,12 @@
       ],
       "services": {
         "appinvite_service": {
-          "other_platform_oauth_client": []
+          "other_platform_oauth_client": [
+            {
+              "client_id": "133165741694-6hqk5bdald13vpdal1092q63c6i34esa.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
         }
       }
     }

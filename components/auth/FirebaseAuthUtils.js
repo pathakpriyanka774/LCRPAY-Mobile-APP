@@ -10,7 +10,7 @@ import {
 } from '@react-native-firebase/auth';
 
 
-const WEB_CLIENT_ID = '878982490513-6gkcdrfb4j7kgrvuh1m81obsbef3rtjv.apps.googleusercontent.com'
+const WEB_CLIENT_ID = '133165741694-6hqk5bdald13vpdal1092q63c6i34esa.apps.googleusercontent.com'
 
 export function configureGoogleSignin() {
   GoogleSignin.configure({

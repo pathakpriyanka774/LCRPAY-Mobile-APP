@@ -1,4 +1,4 @@
-package com.pathakpriyanka.lcrpay
+package com.LcrPay.LcrPay
 
 import android.app.Application
 import android.content.res.Configuration
@@ -16,18 +16,43 @@ import com.facebook.react.defaults.DefaultReactNativeHost
 import expo.modules.ApplicationLifecycleDispatcher
 import expo.modules.ReactNativeHostWrapper
 
+import com.LcrPay.LcrPay.phonehint.PhoneHintPackage
+import com.LcrPay.LcrPay.UPIPackage
+import com.LcrPay.LcrPay.integrity.IntegrityPackage
+
+
+
+// ✅ Just this one import is required for OTA:
+// import expo.modules.updates.UpdatesController
+
 class MainApplication : Application(), ReactApplication {
 
   override val reactNativeHost: ReactNativeHost = ReactNativeHostWrapper(
       this,
       object : DefaultReactNativeHost(this) {
-        override fun getPackages(): List<ReactPackage> =
-            PackageList(this).packages.apply {
-              // Packages that cannot be autolinked yet can be added manually here, for example:
-              // add(MyReactNativePackage())
-            }
+
+        
+
+
+
+          override fun getPackages(): List<ReactPackage> {
+            val packages = PackageList(this).packages.toMutableList()
+            packages.add(PhoneHintPackage())
+            packages.add(UPIPackage())
+            packages.add(IntegrityPackage())
+
+            return packages
+  }
+
 
           override fun getJSMainModuleName(): String = ".expo/.virtual-metro-entry"
+          
+          // 🔑 Tell RN to use expo-updates bundle when not using Metro
+          // override fun getJSBundleFile(): String? =
+          // expo.modules.updates.UpdatesController.instance.launchAssetFile
+
+          // override fun getBundleAssetName(): String? =
+          // expo.modules.updates.UpdatesController.instance.bundleAssetName
 
           override fun getUseDeveloperSupport(): Boolean = BuildConfig.DEBUG
 
@@ -40,13 +65,22 @@ class MainApplication : Application(), ReactApplication {
 
   override fun onCreate() {
     super.onCreate()
+
     DefaultNewArchitectureEntryPoint.releaseLevel = try {
       ReleaseLevel.valueOf(BuildConfig.REACT_NATIVE_RELEASE_LEVEL.uppercase())
     } catch (e: IllegalArgumentException) {
       ReleaseLevel.STABLE
     }
     loadReactNative(this)
+
+
+    // ✅ Initialize Updates (works for both release & dev-client when Metro is off)
+    // UpdatesController.initialize(this)
+    
     ApplicationLifecycleDispatcher.onApplicationCreate(this)
+
+
+    com.LcrPay.LcrPay.util.AppSignatureHelper(this).getAppSignatures()
   }
 
   override fun onConfigurationChanged(newConfig: Configuration) {

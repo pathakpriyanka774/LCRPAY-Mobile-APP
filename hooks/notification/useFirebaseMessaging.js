@@ -50,12 +50,19 @@ export function useFirebaseMessaging({ accessToken }) {
           await ensureAndroidChannel();
         }
 
-        // 3) FCM permission + device registration
-        try { await messaging().requestPermission(); } catch { }
-        try { await messaging().registerDeviceForRemoteMessages(); } catch { }
+        // 3) FCM permission + device registration (using modular API)
+        const m = getMessaging(getApp());
+        try {
+          const { requestPermission, registerDeviceForRemoteMessages, getToken } = await import('@react-native-firebase/messaging');
+          await requestPermission(m);
+        } catch { }
+        try {
+          const { registerDeviceForRemoteMessages } = await import('@react-native-firebase/messaging');
+          if (registerDeviceForRemoteMessages) await registerDeviceForRemoteMessages(m);
+        } catch { }
 
         // 4) Get token once and register ONCE per launch
-        const token = (await getFcmToken()) || (await messaging().getToken());
+        const token = await getFcmToken();
         console.log('[FCM] token:', token || '(null)');
 
         await maybeRegisterOncePerLaunch({
@@ -65,8 +72,7 @@ export function useFirebaseMessaging({ accessToken }) {
           registeringRef,
         });
 
-        // 5) Foreground message handler
-        const m = getMessaging(getApp());
+        // 5) Foreground message handler (reuse 'm' from above)
         unsubMessageRef.current = onMessage(m, async (remoteMessage) => {
           const title = remoteMessage?.notification?.title || remoteMessage?.data?.title || 'Notification';
           const body = remoteMessage?.notification?.body || remoteMessage?.data?.body || '';
