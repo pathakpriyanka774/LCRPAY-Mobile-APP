@@ -1,7 +1,7 @@
 {
   "expo": {
     "name": "LCR Pay",
-    "version": "1.0.21",
+    "version": "1.0.24",
     "newArchEnabled": false,
     "platforms": [
       "android"

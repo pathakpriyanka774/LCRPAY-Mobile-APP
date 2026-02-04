@@ -14,6 +14,14 @@
       },
       "oauth_client": [
         {
+          "client_id": "133165741694-e8l0ojjmf7qvovsga3cpe4mf1ev3mk8q.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.LcrPay.LcrPay",
+            "certificate_hash": "5e8f16062ea3cd2c4a0d547876baa6f38cabf625"
+          }
+        },
+        {
           "client_id": "133165741694-6hqk5bdald13vpdal1092q63c6i34esa.apps.googleusercontent.com",
           "client_type": 3
         }

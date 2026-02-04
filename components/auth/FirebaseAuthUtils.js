@@ -15,8 +15,8 @@ const WEB_CLIENT_ID = '133165741694-6hqk5bdald13vpdal1092q63c6i34esa.apps.google
 export function configureGoogleSignin() {
   GoogleSignin.configure({
     webClientId: WEB_CLIENT_ID,
-    offlineAccess: true,
-    forceCodeForRefreshToken: true,
+    offlineAccess: false,
+    forceCodeForRefreshToken: false,
   });
 }
 
