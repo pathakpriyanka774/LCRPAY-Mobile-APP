@@ -1,0 +1,35 @@
+package com.LcrPay.LcrPay.integrity
+
+import android.util.Log
+import com.facebook.react.bridge.*
+import com.google.android.play.core.integrity.IntegrityManagerFactory
+import com.google.android.play.core.integrity.IntegrityTokenRequest
+
+class IntegrityModule(reactContext: ReactApplicationContext) :
+    ReactContextBaseJavaModule(reactContext) {
+
+    override fun getName() = "IntegrityModule"
+
+    @ReactMethod
+    fun getIntegrityToken(nonce: String, promise: Promise) {
+        try {
+            val integrityManager = IntegrityManagerFactory.create(reactApplicationContext)
+
+            val request = IntegrityTokenRequest.builder()
+                .setNonce(nonce)
+                .build()
+
+            integrityManager.requestIntegrityToken(request)
+                .addOnSuccessListener { response ->
+                    promise.resolve(response.token())
+                }
+                .addOnFailureListener { err ->
+                    Log.e("Integrity", "Error requesting token", err)
+                    promise.reject("ERR_INTEGRITY", err.message)
+                }
+
+        } catch (e: Exception) {
+            promise.reject("ERR_EXCEPTION", e.message)
+        }
+    }
+}

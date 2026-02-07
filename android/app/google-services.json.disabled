@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "878982490513",
+    "project_id": "lcrpay-project",
+    "storage_bucket": "lcrpay-project.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:878982490513:android:default",
+        "android_client_info": {
+          "package_name": "com.lcrpay.app"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "878982490513-6gkcdrfb4j7kgrvuh1m81obsbef3rtjv.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDummy-Key-For-Development"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "878982490513-6gkcdrfb4j7kgrvuh1m81obsbef3rtjv.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
